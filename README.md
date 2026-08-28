@@ -36,7 +36,7 @@ URL 해시도 현재 공유 설정만 반영하므로 주소를 그대로 복사
 
 ```js
 const CFG = {
-  venue: "관악캠퍼스점",
+  venue: "서울대점",
   pos:   "POS 03",
   ig:    "@vyneherb_kr",
   tags:  "#건강영수증 #체질테스트 #바인허브"
