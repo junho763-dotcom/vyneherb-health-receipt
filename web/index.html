@@ -3,134 +3,167 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>건강 영수증 — 내 몸이 결제한 내역서</title>
-<meta name="description" content="지난 일주일, 내 몸이 결제한 내역서. 11문항으로 보는 체질 영수증.">
-<meta property="og:title" content="건강 영수증 — 내 몸이 결제한 내역서">
-<meta property="og:description" content="11문항 45초. 내 체질과 지난 일주일이 영수증 한 장으로 출력됩니다.">
+<title>건강 영수증 — 너 지금 몇 점짜리 몸이야?</title>
+<meta name="description" content="14문항 1분. 내 체질이랑 지난 일주일이 영수증으로 나옴.">
+<meta property="og:title" content="너 지금 몇 점짜리 몸이야?">
+<meta property="og:description" content="14문항 1분이면 내 체질이랑 건강 점수가 영수증으로 나옴.">
 <meta property="og:type" content="website">
+<meta name="theme-color" content="#0c0d0b">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.css">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 :root{
-  --paper:#f4f1ea; --paper-2:#eae5d9;
-  --ink:#1a1a1a; --ink-2:#6b665c; --ink-3:#a39d90;
-  --dark:#141310;
-  --hot:#c4452f;
+  --bg:#0c0d0b; --bg2:#15170f; --line:#2b2e22;
+  --acid:#cbf24e; --acid-d:#9dbf33;
+  --paper:#f7f6f1;
+  --ink:#14150f; --ink-2:#67655a; --ink-3:#a3a094;
+  --hot:#ff5c3a;
+  --sans:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
   --mono:"Nanum Gothic Coding",ui-monospace,SFMono-Regular,Menlo,monospace;
 }
 html,body{height:100%}
-body{font-family:var(--mono);background:var(--dark);color:var(--ink);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body{font-family:var(--sans);background:var(--bg);color:#fff;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 #app{min-height:100dvh;display:flex;flex-direction:column}
 .screen{display:none;flex:1;flex-direction:column}
 .screen.on{display:flex}
+.btn{display:inline-flex;align-items:center;justify-content:center;font-family:var(--sans);
+  font-size:17px;font-weight:800;letter-spacing:-.02em;padding:20px 40px;border:0;cursor:pointer;
+  border-radius:14px;background:var(--acid);color:#111;transition:transform .1s ease,opacity .12s}
+.btn:active{transform:scale(.97)}
+.btn:disabled{opacity:.5}
+.btn.wide{width:100%}
+.btn.ghost{background:transparent;color:#e8e6dd;border:1.5px solid var(--line);font-weight:700}
 
 /* ---------- INTRO ---------- */
-#intro{background:var(--dark);color:var(--paper);align-items:center;justify-content:center;padding:48px 28px;text-align:center;position:relative;overflow:hidden}
-#intro .grain{position:absolute;inset:0;opacity:.05;pointer-events:none;background-image:repeating-linear-gradient(0deg,#fff 0 1px,transparent 1px 3px)}
-#intro .logo{width:150px;opacity:.9;margin-bottom:56px}
-#intro .kicker{font-size:11px;letter-spacing:.32em;color:var(--ink-3);margin-bottom:22px}
-#intro h1{font-size:38px;word-break:keep-all;font-weight:700;line-height:1.28;letter-spacing:-.01em;margin-bottom:20px}
-#intro h1 em{font-style:normal;color:var(--hot)}
-#intro p{font-size:14px;line-height:1.85;color:#b9b3a6;margin-bottom:44px;word-break:keep-all}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font-family:var(--mono);font-size:16px;font-weight:700;letter-spacing:.02em;padding:19px 44px;border:0;cursor:pointer;border-radius:2px;background:var(--paper);color:var(--ink);transition:transform .12s ease,opacity .12s}
-.btn:active{transform:scale(.97)}
-.btn:disabled{opacity:.55}
-.btn.ghost{background:transparent;color:var(--paper);border:1px solid #4a4640}
-#intro .note{margin-top:34px;font-size:11px;color:#6b665c;line-height:1.8}
-.dots{display:flex;gap:6px;justify-content:center;margin-bottom:30px}
-.dots i{width:5px;height:5px;background:var(--hot);border-radius:50%;opacity:.85;animation:bl 1.4s infinite}
-.dots i:nth-child(2){animation-delay:.2s}
-.dots i:nth-child(3){animation-delay:.4s}
-@keyframes bl{0%,100%{opacity:.2}50%{opacity:1}}
+#intro{align-items:center;justify-content:center;padding:44px 26px;text-align:center;position:relative;overflow:hidden}
+#intro .glow{position:absolute;width:520px;height:520px;border-radius:50%;top:-190px;left:50%;transform:translateX(-50%);
+  background:radial-gradient(circle,rgba(203,242,78,.20),transparent 66%);pointer-events:none}
+#intro .logo{width:132px;opacity:.95;margin-bottom:26px;position:relative}
+#intro .kicker{font-size:11.5px;font-weight:700;letter-spacing:.12em;color:var(--acid);margin-bottom:20px;position:relative}
+#intro h1{font-size:46px;font-weight:900;line-height:1.14;letter-spacing:-.045em;margin-bottom:18px;position:relative;word-break:keep-all}
+#intro h1 em{font-style:normal;color:var(--acid)}
+#intro .sub{font-size:15px;font-weight:500;line-height:1.7;color:#a5a397;margin-bottom:26px;position:relative}
+.chips{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-bottom:26px;position:relative}
+.chips span{font-size:12px;font-weight:600;color:#cfcdc2;background:var(--bg2);border:1px solid var(--line);padding:8px 13px;border-radius:100px}
+.perk{position:relative;width:100%;max-width:400px;border:1.5px dashed var(--acid-d);border-radius:14px;padding:15px 16px;margin-bottom:26px}
+.perk b{display:block;font-size:13.5px;font-weight:800;color:var(--acid);margin-bottom:5px}
+.perk span{font-size:12.5px;line-height:1.65;color:#9a9889}
+#intro .note{margin-top:26px;font-size:11.5px;color:#5e5c53;line-height:1.7;position:relative}
+
+/* ---------- 공통 상단바 ---------- */
+.qtop{padding:20px 22px 0;position:sticky;top:0;background:var(--bg);z-index:5}
+.qbar{display:flex;justify-content:space-between;align-items:center;font-size:12px;font-weight:700;color:#6d6b60;margin-bottom:11px}
+.qbar b{color:var(--acid)}
+.qtrack{height:4px;background:var(--line);border-radius:100px;overflow:hidden}
+.qfill{height:100%;width:0;background:var(--acid);border-radius:100px;transition:width .35s cubic-bezier(.4,0,.2,1)}
+.qbody{flex:1;display:flex;flex-direction:column;justify-content:center;padding:30px 22px 24px;max-width:520px;width:100%;margin:0 auto}
+.qfoot{padding:0 22px 24px;max-width:520px;width:100%;margin:0 auto}
+.back{background:none;border:0;font-family:var(--sans);font-size:13px;font-weight:600;color:#5e5c53;cursor:pointer;padding:8px 0}
 
 /* ---------- QUIZ ---------- */
-#quiz,#intake{background:var(--paper)}
-.qtop{padding:22px 24px 0;position:sticky;top:0;background:var(--paper);z-index:5}
-.qbar{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--ink-2);letter-spacing:.1em;margin-bottom:10px}
-.qbar b{color:var(--ink);font-weight:700}
-.qtrack{height:3px;background:var(--paper-2);position:relative;overflow:hidden}
-.qfill{position:absolute;inset:0 auto 0 0;background:var(--ink);transition:width .3s cubic-bezier(.4,0,.2,1)}
-.qbody{flex:1;display:flex;flex-direction:column;justify-content:center;padding:36px 24px 28px;max-width:520px;width:100%;margin:0 auto}
-.qtag{font-size:10px;letter-spacing:.28em;color:var(--ink-3);margin-bottom:16px}
-.qtext{font-size:25px;font-weight:700;line-height:1.45;margin-bottom:34px;word-break:keep-all;letter-spacing:-.01em}
-.opts{display:flex;flex-direction:column;gap:9px}
-.opt{display:flex;align-items:flex-start;gap:13px;text-align:left;width:100%;font-family:var(--mono);font-size:15px;line-height:1.55;color:var(--ink);background:transparent;border:1px solid #d8d2c4;padding:17px 18px;cursor:pointer;transition:background .12s,border-color .12s,transform .1s;word-break:keep-all}
+.qtag{display:inline-flex;align-items:center;align-self:flex-start;font-size:11px;font-weight:800;
+  color:#111;background:var(--acid);padding:5px 10px;border-radius:6px;margin-bottom:16px}
+.qtag.fun{background:#ff5c3a;color:#fff}
+.qtext{font-size:29px;font-weight:800;line-height:1.32;letter-spacing:-.04em;word-break:keep-all}
+.qsub{font-size:13.5px;font-weight:500;color:#77756a;margin-top:10px;word-break:keep-all}
+.opts{display:flex;flex-direction:column;gap:10px;margin-top:30px}
+.opt{display:flex;align-items:center;gap:12px;text-align:left;width:100%;font-family:var(--sans);
+  font-size:16px;font-weight:600;line-height:1.45;color:#e9e7dd;background:var(--bg2);
+  border:1.5px solid var(--line);border-radius:14px;padding:18px 17px;cursor:pointer;
+  transition:transform .09s,border-color .12s,background .12s;word-break:keep-all}
+.opt .n{flex:none;width:22px;height:22px;border-radius:50%;border:1.5px solid #3b3f2f;
+  display:grid;place-items:center;font-size:10.5px;font-weight:800;color:#6d6b60;transition:.12s}
 .opt:active{transform:scale(.985)}
-.opt:hover{border-color:var(--ink);background:#efebe1}
-.opt .n{color:var(--ink-3);flex:none;font-weight:700}
-.qfoot{padding:0 24px 26px;max-width:520px;width:100%;margin:0 auto}
-.back{background:none;border:0;font-family:var(--mono);font-size:12px;color:var(--ink-3);cursor:pointer;padding:8px 0}
+.opt.tapped{border-color:var(--acid);background:#1d2113}
+.opt.tapped .n{background:var(--acid);border-color:var(--acid);color:#111}
+/* 터치 기기에서 :hover 잔상이 다음 문항까지 남는 문제를 막는다 */
+@media (hover:hover){
+  .opt:hover{border-color:#4a4f39;background:#1a1d12}
+}
+
+/* ---------- INTAKE ---------- */
+.form{display:flex;flex-direction:column;gap:20px;margin-top:26px}
+.fld{display:flex;flex-direction:column;gap:9px}
+.flab{font-size:12.5px;font-weight:700;color:#8b897d;display:flex;align-items:center;gap:7px}
+.flab i{font-style:normal;font-size:10px;font-weight:800;padding:3px 7px;border-radius:5px;line-height:1.3}
+.flab .req{background:var(--acid);color:#111}
+.flab .opt2{background:var(--bg2);border:1px solid var(--line);color:#6d6b60}
+.form input{font-family:var(--sans);font-size:17px;font-weight:600;color:#fff;background:var(--bg2);
+  border:1.5px solid var(--line);border-radius:12px;padding:16px 15px;width:100%}
+.form input::placeholder{color:#4f4d45;font-weight:500}
+.form input:focus{outline:none;border-color:var(--acid)}
+.form input[type=number]::-webkit-outer-spin-button,
+.form input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.form input[type=number]{-moz-appearance:textfield}
+.frow{display:flex;gap:11px}
+.frow .fld{flex:1}
+.unit{position:relative}
+.unit em{position:absolute;right:15px;top:50%;transform:translateY(-50%);font-style:normal;font-size:13px;font-weight:600;color:#6d6b60}
+.unit input{padding-right:44px}
+.segs{display:flex;gap:8px}
+.segs button{flex:1;font-family:var(--sans);font-size:15px;font-weight:700;color:#a5a397;background:var(--bg2);
+  border:1.5px solid var(--line);border-radius:12px;padding:15px 4px;cursor:pointer;transition:.12s}
+.segs button.on{background:var(--acid);border-color:var(--acid);color:#111}
+.fnote{font-size:12px;line-height:1.75;color:#67655a;background:var(--bg2);border-radius:12px;padding:14px 15px}
+.fnote b{color:var(--acid)}
+.ferr{font-size:13px;font-weight:600;color:var(--hot);min-height:17px}
 
 /* ---------- RESULT ---------- */
-#result{background:var(--dark);padding:28px 18px 46px;align-items:center}
+#result{padding:26px 16px 44px;align-items:center}
 .rwrap{width:100%;max-width:420px;margin:0 auto}
-.receipt{position:relative;background:var(--paper);color:var(--ink);padding:34px 26px 30px;margin:12px 0;box-shadow:0 18px 50px rgba(0,0,0,.5)}
-.receipt::before,.receipt::after{content:"";position:absolute;left:0;right:0;height:9px;background:linear-gradient(-45deg,var(--paper) 50%,transparent 50%) 0 0/18px 18px repeat-x,linear-gradient(45deg,var(--paper) 50%,transparent 50%) 0 0/18px 18px repeat-x}
+.hero{text-align:center;padding:6px 0 22px}
+.hero canvas{width:150px;height:150px;display:block;margin:0 auto 14px}
+.hero .hk{font-size:12px;font-weight:700;letter-spacing:.1em;color:var(--acid);margin-bottom:8px}
+.hero .hn{font-size:42px;font-weight:900;letter-spacing:-.045em;line-height:1.1}
+.hero .hnick{font-size:17px;font-weight:700;color:#a5a397;margin-top:8px}
+.hero .hline{font-size:14px;font-weight:500;line-height:1.65;color:#77756a;margin-top:12px;word-break:keep-all}
+
+.receipt{position:relative;background:var(--paper);color:var(--ink);font-family:var(--mono);
+  padding:32px 24px 28px;margin:12px 0;box-shadow:0 20px 60px rgba(0,0,0,.55)}
+.receipt::before,.receipt::after{content:"";position:absolute;left:0;right:0;height:9px;
+  background:linear-gradient(-45deg,var(--paper) 50%,transparent 50%) 0 0/18px 18px repeat-x,
+             linear-gradient(45deg,var(--paper) 50%,transparent 50%) 0 0/18px 18px repeat-x}
 .receipt::before{top:-9px;transform:scaleY(-1)}
 .receipt::after{bottom:-9px}
-.rlogo{display:block;width:132px;margin:0 auto 16px}
-.rtitle{text-align:center;font-size:19px;font-weight:700;letter-spacing:.42em;text-indent:.42em;margin-bottom:5px}
-.rsub{text-align:center;font-size:10px;letter-spacing:.3em;color:var(--ink-2);margin-bottom:18px}
+.rlogo{display:block;width:126px;margin:0 auto 15px}
+.rtitle{text-align:center;font-size:18px;font-weight:700;letter-spacing:.42em;text-indent:.42em;margin-bottom:5px}
+.rsub{text-align:center;font-size:10px;letter-spacing:.3em;color:var(--ink-2);margin-bottom:17px}
 .dv{border-top:1px dashed #b9b2a2;margin:13px 0}
 .dv2{border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);height:3px;margin:14px 0}
 .meta{font-size:11px;color:var(--ink-2);line-height:1.85}
-.row{display:flex;justify-content:space-between;gap:12px;font-size:13px;line-height:1.9}
+.row{display:flex;justify-content:space-between;gap:10px;font-size:13px;line-height:1.9}
 .row .l{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.row .m{flex:none;color:var(--ink-2);font-size:12px;width:52px;text-align:right}
-.row .r{flex:none;width:74px;text-align:right;font-variant-numeric:tabular-nums}
+.row .m{flex:none;color:var(--ink-2);font-size:12px;width:54px;text-align:right}
+.row .r{flex:none;width:72px;text-align:right;font-variant-numeric:tabular-nums}
 .row.neg .r{color:var(--hot)}
-.hd{font-size:11px;color:var(--ink-3);letter-spacing:.12em;display:flex;justify-content:space-between;margin-bottom:4px}
-.ctype{text-align:center;padding:6px 0 2px}
-.ccode{font-size:11px;letter-spacing:.26em;color:var(--ink-2);margin-bottom:9px}
-.cname{font-size:31px;font-weight:700;letter-spacing:-.01em;line-height:1.2}
+.hd{font-size:11px;color:var(--ink-3);letter-spacing:.1em;display:flex;justify-content:space-between;margin-bottom:4px}
+.ctype{text-align:center;padding:4px 0 2px}
+.ccode{font-size:11px;letter-spacing:.24em;color:var(--ink-2);margin-bottom:8px}
+.cname{font-size:30px;font-weight:700;line-height:1.2}
 .cheat{display:inline-block;margin-top:9px;font-size:12px;border:1px solid var(--ink);padding:4px 12px;letter-spacing:.06em}
-.cnick{font-size:17px;font-weight:700;margin-top:15px;color:var(--hot)}
-.cline{font-size:13px;line-height:1.8;color:var(--ink-2);margin-top:8px;word-break:keep-all}
 .total{display:flex;justify-content:space-between;align-items:baseline;font-size:15px;font-weight:700;margin-top:4px}
 .total .r{font-size:19px;font-variant-numeric:tabular-nums}
 .grade{display:flex;justify-content:space-between;align-items:center;margin-top:12px}
-.grade .lab{font-size:12px;color:var(--ink-2);letter-spacing:.1em}
+.grade .lab{font-size:12px;color:var(--ink-2);letter-spacing:.08em}
 .grade .g{font-size:52px;font-weight:700;line-height:.9;letter-spacing:-.03em}
 .gmsg{font-size:12px;color:var(--ink-2);text-align:right;line-height:1.7;margin-top:9px;word-break:keep-all}
-.plist{font-size:12.5px;line-height:1.95}
-.plist>div{display:flex;gap:8px;align-items:flex-start}
-.plist .k{color:var(--ink-3);flex:none;width:66px;white-space:nowrap}
-.plist .v{color:var(--ink);flex:1;min-width:0;word-break:keep-all}
-.tagline{background:var(--ink);color:var(--paper);text-align:center;font-size:12px;padding:10px 8px;margin-top:14px;line-height:1.6;word-break:keep-all}
-.rfoot{text-align:center;margin-top:18px}
-.rfoot img.qr{width:92px;image-rendering:pixelated;margin-bottom:10px}
-.rfoot .ig{font-size:13px;font-weight:700;letter-spacing:.04em}
-.rfoot .tags{font-size:11px;color:var(--ink-2);margin-top:6px;line-height:1.7}
-.rfoot .dis{font-size:9.5px;color:var(--ink-3);margin-top:14px;line-height:1.7}
-.barcode{display:flex;gap:1.5px;justify-content:center;align-items:flex-end;height:34px;margin-top:16px}
-.barcode i{background:var(--ink);width:2px;display:block}
-.acts{display:flex;flex-direction:column;gap:9px;margin-top:34px}
-.acts .btn{width:100%}
-.hint{text-align:center;font-size:11px;color:#6b665c;margin-top:16px;line-height:1.8}
-.toast{position:fixed;left:50%;bottom:34px;transform:translate(-50%,20px);background:var(--paper);color:var(--ink);font-size:13px;padding:12px 22px;opacity:0;pointer-events:none;transition:.25s;z-index:99}
-.toast.on{opacity:1;transform:translate(-50%,0)}
-/* intro badges */
-.ibadge{display:flex;gap:7px;justify-content:center;flex-wrap:wrap;margin:-26px 0 34px}
-.ibadge span{font-size:10.5px;letter-spacing:.06em;color:#b9b3a6;border:1px solid #3d3933;padding:6px 11px}
-/* quiz sub */
-.qsub{font-size:12px;color:var(--ink-3);margin:-24px 0 30px;line-height:1.7;word-break:keep-all}
-/* score box */
 .sbox{margin-top:2px}
 .srow{display:flex;justify-content:space-between;align-items:baseline;font-size:12.5px;line-height:2.1}
-.srow .sk{color:var(--ink-2);letter-spacing:.06em}
+.srow .sk{color:var(--ink-2)}
 .srow .sv{font-size:12px;color:var(--ink-2)}
 .srow .sv b{font-size:21px;font-weight:700;color:var(--ink)}
 .srow .sv.hot b{color:var(--hot)}
-.gauge{position:relative;height:13px;margin:15px 0 7px;border:1px solid var(--ink);background:repeating-linear-gradient(90deg,#ded7c7 0 3px,transparent 3px 7px)}
+.gauge{position:relative;height:13px;margin:15px 0 7px;border:1px solid var(--ink);
+  background:repeating-linear-gradient(90deg,#ded7c7 0 3px,transparent 3px 7px)}
 .gf{position:absolute;left:0;top:0;bottom:0;background:var(--ink)}
 .ga{position:absolute;top:-5px;bottom:-5px;width:2px;background:var(--hot)}
-.glab{display:flex;justify-content:space-between;font-size:10px;color:var(--ink-3);letter-spacing:.04em}
+.glab{display:flex;justify-content:space-between;font-size:10px;color:var(--ink-3)}
 .glab .c{color:var(--hot)}
-/* distribution */
 .dist{margin-top:2px}
-.dtitle{font-size:10.5px;color:var(--ink-3);letter-spacing:.14em;margin-bottom:9px}
+.dtitle{font-size:10.5px;color:var(--ink-3);letter-spacing:.12em;margin-bottom:9px}
 .drow{display:flex;align-items:center;gap:9px;font-size:12px;line-height:2}
 .drow .dn{flex:none;width:50px}
 .drow .db{flex:1;height:9px;background:#e4ded0;position:relative}
@@ -140,59 +173,46 @@ body{font-family:var(--mono);background:var(--dark);color:var(--ink);-webkit-fon
 .drow.on{font-weight:700}
 .drow.on .db i{background:var(--hot)}
 .drow.on .dp{color:var(--hot)}
-/* intake form */
-.form{display:flex;flex-direction:column;gap:22px;margin-top:4px}
-.fld{display:flex;flex-direction:column;gap:9px}
-.flab{font-size:11px;letter-spacing:.14em;color:var(--ink-2);display:flex;align-items:center;gap:8px}
-.flab i{font-style:normal;font-size:9.5px;letter-spacing:.08em;padding:3px 6px;line-height:1}
-.flab .req{background:var(--ink);color:var(--paper)}
-.flab .opt2{border:1px solid #cdc6b6;color:var(--ink-3)}
-.form input{font-family:var(--mono);font-size:17px;color:var(--ink);background:transparent;
-  border:0;border-bottom:1px solid #cdc6b6;padding:9px 2px;width:100%;border-radius:0}
-.form input::placeholder{color:#c6bfae}
-.form input:focus{outline:none;border-bottom-color:var(--ink)}
-.form input[type=number]::-webkit-outer-spin-button,
-.form input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
-.form input[type=number]{-moz-appearance:textfield}
-.frow{display:flex;gap:16px}
-.frow .fld{flex:1}
-.unit{display:flex;align-items:baseline;gap:7px;border-bottom:1px solid #cdc6b6}
-.unit input{border-bottom:0}
-.unit em{font-style:normal;font-size:12px;color:var(--ink-3);flex:none;padding-bottom:9px}
-.unit:focus-within{border-bottom-color:var(--ink)}
-.segs{display:flex;gap:8px}
-.segs button{flex:1;font-family:var(--mono);font-size:14px;color:var(--ink-2);background:transparent;
-  border:1px solid #d8d2c4;padding:13px 4px;cursor:pointer;transition:.12s}
-.segs button.on{background:var(--ink);border-color:var(--ink);color:var(--paper);font-weight:700}
-.fnote{font-size:11px;line-height:1.85;color:var(--ink-3);border-top:1px dashed #cdc6b6;padding-top:16px}
-.fnote b{color:var(--ink-2)}
-.ferr{font-size:12px;color:var(--hot);min-height:16px}
-.btn.wide{width:100%;background:var(--ink);color:var(--paper)}
-/* 신체 계측 */
-.bio{font-size:12.5px;line-height:1.95}
-.bio>div{display:flex;justify-content:space-between;gap:10px}
+.plist{font-size:12.5px;line-height:1.95}
+.plist>div{display:flex;gap:8px;align-items:flex-start}
+.plist .k{color:var(--ink-3);flex:none;width:66px;white-space:nowrap}
+.plist .v{color:var(--ink);flex:1;min-width:0;word-break:keep-all}
+.bio>div{display:flex;justify-content:space-between;gap:10px;font-size:12.5px;line-height:1.95}
 .bio .k{color:var(--ink-3)}
-.bio .v{font-variant-numeric:tabular-nums}
 .bio .tag{color:var(--hot);font-weight:700}
-/* 공유 설정 */
-.shopt{border:1px solid #33302a;background:#1c1a16;padding:18px 16px;margin-top:28px}
-.sotitle{font-size:11px;letter-spacing:.16em;color:#8d877b;display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
-.sohint{letter-spacing:0;font-size:11px;color:#6b665c;line-height:1.6}
-.sw{display:flex;align-items:center;gap:11px;padding:10px 0;cursor:pointer}
-.sw input{appearance:none;-webkit-appearance:none;flex:none;width:17px;height:17px;border:1px solid #55504a;background:transparent;margin:0;position:relative;cursor:pointer}
-.sw input:checked{background:var(--paper);border-color:var(--paper)}
-.sw input:checked::after{content:"";position:absolute;left:5px;top:1px;width:5px;height:10px;border:solid #141310;border-width:0 2px 2px 0;transform:rotate(45deg)}
-.sw .lb{flex:1;font-size:12.5px;color:#cfc9bd;line-height:1.5}
-.sw .st{flex:none;font-size:10px;letter-spacing:.08em;padding:4px 8px;border:1px solid #4a453e;color:#8d877b}
-.sw .st.on{border-color:var(--paper);color:var(--paper)}
-.sostate{margin-top:12px;padding-top:13px;border-top:1px dashed #33302a;font-size:11px;color:#8d877b;line-height:1.75}
-.sostate b{color:var(--paper)}
-/* 영수증 내 비공개 배지 */
 .pv{color:var(--hot);letter-spacing:0}
-.bio.masked .v{color:var(--ink-3)}
-/* actions */
+.tagline{background:var(--ink);color:var(--paper);text-align:center;font-size:12px;padding:10px 8px;margin-top:14px;line-height:1.6;word-break:keep-all}
+.rfoot{text-align:center;margin-top:16px}
+.rfoot img.qr{width:88px;image-rendering:pixelated;margin-bottom:9px}
+.rfoot .ig{font-size:13px;font-weight:700}
+.rfoot .tags{font-size:11px;color:var(--ink-2);margin-top:6px;line-height:1.7}
+.rfoot .dis{font-size:9.5px;color:var(--ink-3);margin-top:13px;line-height:1.7}
+.barcode{display:flex;gap:1.5px;justify-content:center;align-items:flex-end;height:32px;margin-top:15px}
+.barcode i{background:var(--ink);width:2px;display:block}
+
+/* 공유 설정 */
+.shopt{border:1.5px solid var(--line);background:var(--bg2);border-radius:16px;padding:18px 16px;margin-top:26px}
+.sotitle{font-size:13px;font-weight:800;color:#e9e7dd;margin-bottom:4px}
+.sohint{font-size:12px;color:#67655a;line-height:1.6;margin-bottom:12px}
+.sw{display:flex;align-items:center;gap:11px;padding:10px 0;cursor:pointer}
+.sw input{appearance:none;-webkit-appearance:none;flex:none;width:20px;height:20px;border-radius:6px;
+  border:1.5px solid #3b3f2f;background:transparent;margin:0;position:relative;cursor:pointer}
+.sw input:checked{background:var(--acid);border-color:var(--acid)}
+.sw input:checked::after{content:"";position:absolute;left:6.5px;top:2.5px;width:5px;height:10px;
+  border:solid #111;border-width:0 2.5px 2.5px 0;transform:rotate(45deg)}
+.sw .lb{flex:1;font-size:13.5px;font-weight:600;color:#cfcdc2;line-height:1.45}
+.sw .st{flex:none;font-size:10.5px;font-weight:800;padding:4px 8px;border-radius:6px;background:#22261a;color:#6d6b60}
+.sw .st.on{background:var(--acid);color:#111}
+.sostate{margin-top:11px;padding-top:12px;border-top:1px solid var(--line);font-size:12px;color:#77756a;line-height:1.7}
+.sostate b{color:var(--acid)}
+.acts{display:flex;flex-direction:column;gap:9px;margin-top:16px}
 .acts2{display:flex;gap:9px}
-.acts2 .btn{flex:1;padding:16px 10px;font-size:14px}
+.acts2 .btn{flex:1;padding:16px 8px;font-size:14.5px}
+.hint{text-align:center;font-size:12px;color:#5e5c53;margin-top:16px;line-height:1.75}
+.toast{position:fixed;left:50%;bottom:30px;transform:translate(-50%,20px);background:var(--acid);color:#111;
+  font-size:14px;font-weight:700;padding:13px 22px;border-radius:100px;opacity:0;pointer-events:none;
+  transition:.22s;z-index:99;max-width:88vw;text-align:center}
+.toast.on{opacity:1;transform:translate(-50%,0)}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -200,30 +220,33 @@ body{font-family:var(--mono);background:var(--dark);color:var(--ink);-webkit-fon
 <div id="app">
 
   <section class="screen on" id="intro">
-    <div class="grain"></div>
+    <div class="glow"></div>
     <img class="logo" src="data:image/png;base64,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" alt="VYNEHERB">
-    <div class="dots"><i></i><i></i><i></i></div>
-    <div class="kicker">HEALTH RECEIPT</div>
-    <h1>당신의 건강 점수는<br><em>몇 점</em>입니까?</h1>
-    <p>여러분의 체질을 <b>50초</b> 만에 파악해 드립니다.<br>11문항이면 영수증 한 장이 나옵니다.</p>
-    <div class="ibadge"><span>체질 4종</span><span>건강 점수 100점</span><span>전국 백분위</span></div>
-    <button class="btn" id="start">50초 만에 확인하기</button>
-    <div class="note">※ 재미로 보는 생활 습관 테스트입니다.<br>의학적 진단이 아닙니다.</div>
+    <div class="kicker">VYNEHERB × 서울대 축제</div>
+    <h1>너 지금<br><em>몇 점짜리</em><br>몸이야?</h1>
+    <div class="sub">14문항, 1분이면 영수증 나옴</div>
+    <div class="chips"><span>체질 4종</span><span>건강 점수 100점</span><span>전국 백분위</span></div>
+    <div class="perk">
+      <b>참여만 해도 전원 증정</b>
+      <span>결과 영수증 스토리에 올리고 부스에서 보여주면 뽑기 1회 추가</span>
+    </div>
+    <button class="btn wide" id="start" style="max-width:400px">영수증 뽑기</button>
+    <div class="note">재미로 보는 테스트야. 의학적 진단 아님.</div>
   </section>
 
   <section class="screen" id="intake">
     <div class="qtop">
-      <div class="qbar"><span>접수 · INTAKE</span><b>00 / 11</b></div>
-      <div class="qtrack"><div class="qfill" style="width:0%"></div></div>
+      <div class="qbar"><span>접수</span><b>0%</b></div>
+      <div class="qtrack"><div class="qfill"></div></div>
     </div>
     <div class="qbody">
-      <div class="qtag">STEP 0 · 문진표 접수</div>
-      <div class="qtext">먼저 접수부터 하겠습니다.</div>
-      <div class="qsub">여기 적으신 내용이 영수증에 그대로 인쇄됩니다.</div>
+      <div class="qtag">STEP 0</div>
+      <div class="qtext">이름부터.</div>
+      <div class="qsub">영수증에 그대로 박힘</div>
       <div class="form">
         <div class="fld">
-          <span class="flab">성명 / 닉네임<i class="req">필수</i></span>
-          <input id="fName" type="text" maxlength="12" placeholder="영수증에 인쇄될 이름" autocomplete="off">
+          <span class="flab">이름 / 닉네임<i class="req">필수</i></span>
+          <input id="fName" type="text" maxlength="12" placeholder="영수증에 찍힐 이름" autocomplete="off">
         </div>
         <div class="fld">
           <span class="flab">성별<i class="req">필수</i></span>
@@ -236,27 +259,27 @@ body{font-family:var(--mono);background:var(--dark);color:var(--ink);-webkit-fon
         <div class="frow">
           <div class="fld">
             <span class="flab">키<i class="opt2">선택</i></span>
-            <span class="unit"><input id="fH" type="number" inputmode="numeric" min="100" max="230" placeholder="000"><em>cm</em></span>
+            <span class="unit"><input id="fH" type="number" inputmode="numeric" placeholder="000"><em>cm</em></span>
           </div>
           <div class="fld">
             <span class="flab">몸무게<i class="opt2">선택</i></span>
-            <span class="unit"><input id="fW" type="number" inputmode="numeric" min="25" max="200" placeholder="00"><em>kg</em></span>
+            <span class="unit"><input id="fW" type="number" inputmode="numeric" placeholder="00"><em>kg</em></span>
           </div>
         </div>
-        <div class="fnote">키·몸무게를 넣으면 결과지에 <b>체격 지수(BMI)</b>가 같이 찍힙니다.<br>건강 점수에는 반영되지 않습니다 — 참고 항목입니다.<br><b>공유하거나 저장하는 이미지에서는 기본으로 가려집니다.</b> 결과 화면에서 켤 수 있습니다.</div>
+        <div class="fnote">키·몸무게 넣으면 <b>BMI</b>까지 찍혀. 점수엔 반영 안 됨.<br><b>공유할 때는 자동으로 가려지니까</b> 편하게 써도 돼.</div>
         <div class="ferr" id="fErr"></div>
       </div>
     </div>
-    <div class="qfoot"><button class="btn wide" id="toQuiz">접수하고 시작하기</button></div>
+    <div class="qfoot"><button class="btn wide" id="toQuiz">시작</button></div>
   </section>
 
   <section class="screen" id="quiz">
     <div class="qtop">
-      <div class="qbar"><span id="qidx">01 / 11</span><b id="qpct">0%</b></div>
-      <div class="qtrack"><div class="qfill" id="qfill" style="width:0%"></div></div>
+      <div class="qbar"><span id="qidx">01 / 14</span><b id="qpct">0%</b></div>
+      <div class="qtrack"><div class="qfill" id="qfill"></div></div>
     </div>
     <div class="qbody">
-      <div class="qtag" id="qtag">PART A · 체질</div>
+      <div class="qtag" id="qtag">체질</div>
       <div class="qtext" id="qtext"></div>
       <div class="qsub" id="qsub"></div>
       <div class="opts" id="opts"></div>
@@ -266,22 +289,30 @@ body{font-family:var(--mono);background:var(--dark);color:var(--ink);-webkit-fon
 
   <section class="screen" id="result">
     <div class="rwrap">
+      <div class="hero">
+        <canvas id="heroChar" width="300" height="300"></canvas>
+        <div class="hk" id="heroCode"></div>
+        <div class="hn" id="heroName"></div>
+        <div class="hnick" id="heroNick"></div>
+        <div class="hline" id="heroLine"></div>
+      </div>
       <div class="receipt" id="receipt"></div>
       <div class="shopt">
-        <div class="sotitle">공유 설정<span class="sohint">저장·공유하는 이미지와 링크에 무엇을 넣을지 고릅니다</span></div>
-        <label class="sw"><input type="checkbox" id="optName" checked><span class="lb">이름 포함</span><span class="st" id="stName">공개</span></label>
-        <label class="sw"><input type="checkbox" id="optBio"><span class="lb">신체 계측 (키 · 몸무게 · BMI) 포함</span><span class="st" id="stBio">비공개</span></label>
+        <div class="sotitle">공유 설정</div>
+        <div class="sohint">저장하거나 공유하는 이미지·링크에 뭘 넣을지 고르기</div>
+        <label class="sw"><input type="checkbox" id="optName" checked><span class="lb">이름 넣기</span><span class="st" id="stName">공개</span></label>
+        <label class="sw"><input type="checkbox" id="optBio"><span class="lb">키 · 몸무게 · BMI 넣기</span><span class="st" id="stBio">비공개</span></label>
         <div class="sostate" id="soState"></div>
       </div>
       <div class="acts">
         <button class="btn" id="share">공유하기</button>
-        <button class="btn" id="save">이미지 저장</button>
+        <button class="btn ghost" id="save">이미지 저장</button>
         <div class="acts2">
           <button class="btn ghost" id="copy">링크 복사</button>
           <button class="btn ghost" id="again">다시 하기</button>
         </div>
       </div>
-      <div class="hint">저장한 영수증을 스토리에 올리고<br>부스에서 보여주면 뽑기 코인을 드립니다.</div>
+      <div class="hint">스토리에 올리고 부스에서 보여주면<br>뽑기 코인 하나 더 줌</div>
     </div>
   </section>
 
@@ -291,7 +322,7 @@ body{font-family:var(--mono);background:var(--dark);color:var(--ink);-webkit-fon
 
 <script>
 /* ============================================================
-   CONFIG — 현장에 맞춰 이 블록만 고치면 됩니다
+   CONFIG — 현장에 맞춰 이 블록만 고치면 됨
    ============================================================ */
 const CFG = {
   venue: "서울대점",
@@ -304,126 +335,266 @@ const LOGO_WHITE = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABT4AAACdCAYAAA
 const QR_IMG     = "data:image/png;base64,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";
 
 /* ============================================================
-   DATA
+   문항
+   part "A" = 체질 판정 · "B" = 점수 반영 · "F" = 순수 재미(결과 미반영)
    ============================================================ */
-const QA = [
-  {q:"내 체형에 가장 가까운 건?", sub:"거울 말고, 옷 입었을 때 기준으로.", a:[
-    {t:"살이 잘 붙고 뼈대가 굵은 편", s:{TE:3}},
-    {t:"마르고 살이 잘 안 붙는다", s:{SE:3}},
-    {t:"상체·어깨가 발달했다", s:{SY:2,TY:1}},
-    {t:"하체가 유독 약한 편이다", s:{TY:3}}]},
-  {q:"땀을 쭉 흘리고 나면?", sub:"사상의학에서 제일 크게 갈리는 지점입니다.", a:[
-    {t:"개운하다. 오히려 컨디션이 좋다", s:{TE:3}},
-    {t:"기운이 쭉 빠진다", s:{SE:3}},
-    {t:"얼굴·머리에만 유독 난다", s:{SY:3}},
-    {t:"원래 땀이 잘 안 나는 편", s:{TY:2,SE:1}}]},
-  {q:"더위와 추위, 뭐가 더 힘들어?", sub:"에어컨 리모컨 쟁탈전을 떠올려 보세요.", a:[
-    {t:"더위. 여름이 지옥이다", s:{SY:2,TE:1}},
-    {t:"추위. 겨울이 지옥이다", s:{SE:3}},
-    {t:"손발은 찬데 얼굴은 뜨겁다", s:{SY:3}},
-    {t:"둘 다 그럭저럭 버틴다", s:{TE:1,TY:1}}]},
-  {q:"내 소화력은?", sub:"장은 거짓말을 안 합니다.", a:[
-    {t:"아무거나 잘 먹고 잘 소화된다", s:{TE:3}},
-    {t:"찬 걸 먹으면 바로 배탈", s:{SE:3}},
-    {t:"자주 더부룩하고 가스가 찬다", s:{SY:2}},
-    {t:"잘 체하고 울렁거릴 때가 많다", s:{TY:3}}]},
-  {q:"스트레스 받으면 나는?", sub:"친구가 보는 나 말고, 진짜 나.", a:[
-    {t:"일단 참고 넘긴다", s:{TE:3}},
-    {t:"속으로 오래 곱씹는다", s:{SE:3}},
-    {t:"바로 티 난다. 짜증부터", s:{SY:3}},
-    {t:"남 신경 안 쓰고 내 방식대로", s:{TY:3}}]},
-  {q:"컨디션 나쁠 때 제일 먼저 오는 신호는?", sub:"몸이 제일 먼저 보내는 청구서.", a:[
-    {t:"변비. 몸이 무겁다", s:{TE:3}},
-    {t:"무른 변. 기운이 없다", s:{SE:3}},
-    {t:"얼굴 열감·입마름·잠이 안 옴", s:{SY:3}},
-    {t:"다리에 힘이 빠진다", s:{TY:3}}]}
-];
+const QUESTIONS = [
+  {part:"F", q:"전교 1등 해본 적 있어?", item:"전교 1등 이력", a:[
+    {t:"당연히 없지", u:"0회"},
+    {t:"딱 한 번 있음", u:"1회"},
+    {t:"몇 번 해봤음", u:"3회+"},
+    {t:"그게 내 정체성이었음", u:"상습범"}]},
 
-const QB = [
-  {q:"지난 일주일, 야식은 몇 번?", item:"야식 (심야결제)", sub:"정직하게. 어차피 몸은 알고 있습니다.", a:[
-    {t:"0회 — 참았다", v:500, u:"0회", r:"드문 케이스입니다. 계속 그러세요."},
-    {t:"1~2회", v:-400, u:"2회", r:"이 정도는 사회생활입니다."},
-    {t:"3~4회", v:-1200, u:"4회", r:"슬슬 청구서가 쌓이는 중."},
-    {t:"5회 이상 — 루틴이다", v:-2000, u:"5회+", r:"영수증에 그대로 찍힙니다."}]},
-  {q:"하루 카페인, 몇 잔?", item:"카페인 충전", sub:"아메리카노도 잔으로 셉니다.", a:[
-    {t:"안 마신다", v:300, u:"0잔", r:"카페인 없이 버티는 몸, 인정."},
-    {t:"1~2잔", v:0, u:"2잔", r:"표준입니다."},
-    {t:"3~4잔", v:-800, u:"4잔", r:"오후 3시 이후는 조심."},
-    {t:"5잔 이상 — 수혈 중", v:-1500, u:"5잔+", r:"혈액형이 아메리카노."}]},
-  {q:"평균 수면 시간은?", item:"수면 부채", sub:"침대에 누운 시간 말고, 실제로 잔 시간.", a:[
-    {t:"7시간 이상", v:1500, u:"7h+", r:"이 항목만으로 점수가 확 오릅니다."},
-    {t:"6시간쯤", v:0, u:"6h", r:"딱 평균."},
-    {t:"5시간쯤", v:-1200, u:"5h", r:"이자가 붙고 있습니다."},
-    {t:"4시간 이하 — 자는 게 사치", v:-2400, u:"4h-", r:"가장 비싼 항목입니다."}]},
-  {q:"일주일에 운동이나 작정하고 걷기, 몇 번?", item:"걸음 적립", sub:"통학길 걷기는 빼고 세는 게 정확합니다.", a:[
-    {t:"5회 이상", v:2000, u:"5회+", r:"유일하게 크게 적립되는 항목."},
-    {t:"3~4회", v:1000, u:"4회", r:"잘하고 있습니다."},
-    {t:"1~2회", v:0, u:"2회", r:"본전."},
-    {t:"거의 안 한다", v:-1000, u:"0회", r:"적립 0원."}]},
-  {q:"하루에 물은 얼마나?", item:"수분 충전", sub:"커피는 물에 안 들어갑니다. 아쉽지만.", a:[
-    {t:"2L 이상", v:700, u:"2L+", r:"교과서적입니다."},
-    {t:"1.5L쯤", v:300, u:"1.5L", r:"괜찮습니다."},
-    {t:"1L쯤", v:0, u:"1L", r:"조금만 더."},
-    {t:"500ml도 안 된다", v:-600, u:"0.5L", r:"마지막 문항까지 정직하시네요."}]}
+  {part:"A", q:"내 체형 어디에 가까워?", sub:"옷 입었을 때 기준", a:[
+    {t:"말랐고 살이 안 붙음", s:{SE:3}},
+    {t:"하체가 유독 약함", s:{TY:3}},
+    {t:"살 잘 붙고 뼈대 굵음", s:{TE:3}},
+    {t:"상체·어깨가 발달함", s:{SY:2,TY:1}}]},
+
+  {part:"A", q:"땀 쫙 흘리고 나면?", a:[
+    {t:"얼굴이랑 머리에만 남", s:{SY:3}},
+    {t:"개운함. 오히려 살아남", s:{TE:3}},
+    {t:"원래 땀이 잘 안 남", s:{TY:2,SE:1}},
+    {t:"기운 쭉 빠짐", s:{SE:3}}]},
+
+  {part:"A", q:"더위랑 추위 중에 뭐가 더 싫어?", a:[
+    {t:"둘 다 그럭저럭 버팀", s:{TE:1,TY:1}},
+    {t:"추위. 겨울이 지옥", s:{SE:3}},
+    {t:"더위. 여름이 지옥", s:{SY:2,TE:1}},
+    {t:"손발은 찬데 얼굴은 뜨거움", s:{SY:3}}]},
+
+  {part:"F", q:"알람 몇 개 맞춰놓고 자?", item:"알람 개수", a:[
+    {t:"안 맞춤. 그냥 일어남", u:"0개"},
+    {t:"1개면 충분", u:"1개"},
+    {t:"2~3개는 있어야지", u:"3개"},
+    {t:"5개 이상. 다 끔", u:"5개+"}]},
+
+  {part:"A", q:"소화력 어때?", sub:"장은 거짓말 안 함", a:[
+    {t:"잘 체하고 울렁거림", s:{TY:3}},
+    {t:"자주 더부룩하고 가스 참", s:{SY:2}},
+    {t:"찬 거 먹으면 바로 배탈", s:{SE:3}},
+    {t:"아무거나 잘 먹고 잘 소화됨", s:{TE:3}}]},
+
+  {part:"A", q:"빡칠 때 나는?", a:[
+    {t:"바로 티 남. 짜증부터", s:{SY:3}},
+    {t:"일단 참고 넘김", s:{TE:3}},
+    {t:"남 신경 안 쓰고 내 방식대로", s:{TY:3}},
+    {t:"속으로 계속 곱씹음", s:{SE:3}}]},
+
+  {part:"A", q:"컨디션 안 좋으면 어디부터 와?", a:[
+    {t:"무른 변. 기운 없음", s:{SE:3}},
+    {t:"얼굴 열나고 입 마르고 잠 안 옴", s:{SY:3}},
+    {t:"변비. 몸이 무거움", s:{TE:3}},
+    {t:"다리에 힘이 빠짐", s:{TY:3}}]},
+
+  {part:"F", q:"안 읽은 카톡 몇 개야?", item:"안 읽은 카톡", a:[
+    {t:"0개. 다 읽어야 됨", u:"0개"},
+    {t:"10개 안쪽", u:"10-"},
+    {t:"100개는 넘음", u:"100+"},
+    {t:"세는 걸 포기함", u:"∞"}]},
+
+  {part:"B", q:"지난주 야식 몇 번 먹었어?", sub:"솔직하게", item:"야식 (심야결제)", a:[
+    {t:"0번. 참았음", v:500, u:"0회", r:"드문 케이스. 계속 그렇게 해"},
+    {t:"1~2번", v:-400, u:"2회", r:"이 정도는 사회생활이지"},
+    {t:"3~4번", v:-1200, u:"4회", r:"슬슬 청구서 쌓이는 중"},
+    {t:"5번 이상. 루틴임", v:-2000, u:"5회+", r:"영수증에 그대로 찍힘"}]},
+
+  {part:"B", q:"하루에 카페인 몇 잔?", sub:"아아도 한 잔", item:"카페인 충전", a:[
+    {t:"5잔 이상. 수혈 중", v:-1500, u:"5잔+", r:"혈액형이 아메리카노"},
+    {t:"3~4잔", v:-800, u:"4잔", r:"오후 3시 이후는 좀 참자"},
+    {t:"1~2잔", v:0, u:"2잔", r:"표준"},
+    {t:"안 마심", v:300, u:"0잔", r:"카페인 없이 버티는 몸, 인정"}]},
+
+  {part:"B", q:"평균 몇 시간 자?", sub:"누운 시간 말고 진짜 잔 시간", item:"수면 부채", a:[
+    {t:"7시간 이상", v:1500, u:"7h+", r:"이거 하나로 점수 확 오름"},
+    {t:"6시간쯤", v:0, u:"6h", r:"딱 평균"},
+    {t:"5시간쯤", v:-1200, u:"5h", r:"이자 붙는 중"},
+    {t:"4시간 이하. 자는 게 사치", v:-2400, u:"4h-", r:"제일 비싼 항목이야 이거"}]},
+
+  {part:"B", q:"일주일에 운동 몇 번 해?", sub:"통학길 걷기는 빼고", item:"걸음 적립", a:[
+    {t:"5번 이상", v:2000, u:"5회+", r:"크게 적립되는 유일한 항목"},
+    {t:"3~4번", v:1000, u:"4회", r:"잘하고 있음"},
+    {t:"1~2번", v:0, u:"2회", r:"본전"},
+    {t:"거의 안 함", v:-1000, u:"0회", r:"적립 0원"}]},
+
+  {part:"B", q:"물 하루에 얼마나 마셔?", sub:"커피는 물 아님", item:"수분 충전", a:[
+    {t:"500ml도 안 됨", v:-600, u:"0.5L", r:"마지막까지 정직하네"},
+    {t:"1L쯤", v:0, u:"1L", r:"조금만 더"},
+    {t:"1.5L쯤", v:300, u:"1.5L", r:"괜찮음"},
+    {t:"2L 이상", v:700, u:"2L+", r:"교과서적"}]}
 ];
 
 const TYPES = {
   TE:{code:"TE-01", name:"태음인", heat:"熱 저장형", nick:"「곰 모드」",
-      line:"들어온 건 일단 다 챙겨둔다. 문제는 내보내는 걸 자꾸 잊는다는 것.",
+      line:"들어온 건 일단 다 챙겨둠. 근데 내보내는 걸 자꾸 까먹음.",
       good:"소고기 · 무 · 콩 · 밤 · 미역",
       bad:"늦은 시간 과식 · 기름진 야식",
       act:"땀 나는 유산소 30분. 빼야 개운해지는 몸.",
-      mate:"태양인", anti:"태음인", rate:"100명 중 약 50명"},
+      mate:"태양인", anti:"태음인", rate:"100명 중 50명"},
   SY:{code:"SY-03", name:"소양인", heat:"熱 과잉형", nick:"「라디에이터」",
-      line:"항상 켜져 있다. 문제는 끄는 버튼이 없다는 것.",
+      line:"항상 켜져 있음. 문제는 끄는 버튼이 없다는 거.",
       good:"보리 · 오이 · 돼지고기 · 배추 · 수박",
-      bad:"인삼 · 닭고기 · 매운 것 · 과음",
-      act:"저녁 산책 20분, 자정 전 취침. 열을 내리는 쪽으로.",
-      mate:"소음인", anti:"소양인", rate:"100명 중 약 30명"},
+      bad:"인삼 · 닭고기 · 매운 거 · 과음",
+      act:"저녁 산책 20분, 자정 전 취침. 열 내리는 쪽으로.",
+      mate:"소음인", anti:"소양인", rate:"100명 중 30명"},
   SE:{code:"SE-02", name:"소음인", heat:"熱 부족형", nick:"「보온병」",
       line:"데우는 데 30분, 식는 데 3분. 온도 관리가 전부인 몸.",
       good:"생강 · 대추 · 찹쌀 · 따뜻한 국물",
       bad:"찬 음료 · 빙수 · 과한 밀가루",
-      act:"가벼운 근력과 반신욕. 무리한 유산소는 오히려 손해.",
-      mate:"소양인", anti:"소음인", rate:"100명 중 약 20명"},
+      act:"가벼운 근력이랑 반신욕. 무리한 유산소는 오히려 손해.",
+      mate:"소양인", anti:"소음인", rate:"100명 중 20명"},
   TY:{code:"TY-00", name:"태양인", heat:"熱 상승형", nick:"「레어 드랍」",
-      line:"설명서가 없는 몸. 1000명 중 1명꼴로 나온다.",
+      line:"설명서 없는 몸. 1000명 중 1명 나옴.",
       good:"메밀 · 조개류 · 포도 · 다래",
       bad:"기름진 고기 · 과음",
       act:"하체 위주 운동. 위로 쏠린 기운을 아래로.",
       mate:"태음인", anti:"태양인", rate:"1000명 중 1명 · RARE"}
 };
 
-/* 대한민국 사상체질 분포 (통상 인용되는 근사치) */
 const DIST = [
   {k:"TE", n:"태음인", p:50,  w:100},
   {k:"SY", n:"소양인", p:30,  w:60},
   {k:"SE", n:"소음인", p:20,  w:40},
   {k:"TY", n:"태양인", p:0.1, w:3}
 ];
-/* 건강 점수 분포 가정: 평균 55, 표준편차 16 */
 const NAT_MEAN = 55, NAT_SD = 16;
 
 const GRADES = [
-  {min: 3000, g:"A+", m:"이 영수증, 위조 아닙니까?"},
-  {min: 1200, g:"A0", m:"관리되고 있음. 유지만 하세요."},
-  {min:    0, g:"B+", m:"무난. 그런데 무난이 제일 어렵죠."},
-  {min:-1500, g:"B0", m:"아직은 괜찮습니다. 아직은."},
-  {min:-3500, g:"C+", m:"몸이 조용히 청구서를 쌓고 있습니다."},
-  {min:-99999,g:"D",  m:"이 영수증, 분할납부 신청 가능합니다."}
+  {min: 3000, g:"A+", m:"이거 위조 아니야?"},
+  {min: 1200, g:"A0", m:"관리되고 있음. 유지만 해."},
+  {min:    0, g:"B+", m:"무난. 근데 무난이 제일 어려움."},
+  {min:-1500, g:"B0", m:"아직은 괜찮아. 아직은."},
+  {min:-3500, g:"C+", m:"몸이 조용히 청구서 쌓는 중."},
+  {min:-99999,g:"D",  m:"이거 분할납부 됩니다."}
 ];
+
+/* ============================================================
+   캐릭터 — canvas 2D로 직접 그린다 (외부 이미지 없음 = 캔버스 오염 없음)
+   ============================================================ */
+const CHAR_COLOR = {
+  TE:{body:"#c08a4e", light:"#eccfa6", dark:"#8a5f31"},
+  SY:{body:"#ff6b3d", light:"#ffc7a8", dark:"#c93f16"},
+  SE:{body:"#5c9ce0", light:"#c8e2f8", dark:"#3570ad"},
+  TY:{body:"#a97bff", light:"#e2d1ff", dark:"#7748cc"}
+};
+
+function drawChar(c, key, cx, cy, size){
+  const P = CHAR_COLOR[key], INK = "#14150f";
+  c.save();
+  c.translate(cx, cy);
+  c.scale(size/200, size/200);
+  c.translate(-100, -100);          // 이제 200×200 좌표계
+  c.lineJoin = "round"; c.lineCap = "round";
+
+  const eye = function(x, y, r){ c.fillStyle = INK; c.beginPath(); c.arc(x, y, r, 0, 6.2832); c.fill(); };
+  const blush = function(x, y){ c.fillStyle = "rgba(255,120,120,.42)"; c.beginPath(); c.ellipse(x, y, 12, 7, 0, 0, 6.2832); c.fill(); };
+
+  if(key === "TE"){                 // 곰 — 둥글고 큰 몸
+    c.fillStyle = P.body;
+    c.beginPath(); c.arc(58, 64, 26, 0, 6.2832); c.fill();
+    c.beginPath(); c.arc(142, 64, 26, 0, 6.2832); c.fill();
+    c.fillStyle = P.light;
+    c.beginPath(); c.arc(58, 64, 13, 0, 6.2832); c.fill();
+    c.beginPath(); c.arc(142, 64, 13, 0, 6.2832); c.fill();
+    c.fillStyle = P.body;
+    c.beginPath(); c.arc(100, 118, 66, 0, 6.2832); c.fill();
+    c.fillStyle = P.light;
+    c.beginPath(); c.ellipse(100, 144, 30, 23, 0, 0, 6.2832); c.fill();
+    eye(76, 106, 8); eye(124, 106, 8);
+    blush(50, 128); blush(150, 128);
+    c.fillStyle = INK;
+    c.beginPath(); c.ellipse(100, 134, 9, 6.5, 0, 0, 6.2832); c.fill();
+    c.strokeStyle = INK; c.lineWidth = 3.6;
+    c.beginPath();
+    c.moveTo(100, 140); c.lineTo(100, 148);
+    c.moveTo(100, 148); c.quadraticCurveTo(90, 157, 83, 148);
+    c.moveTo(100, 148); c.quadraticCurveTo(110, 157, 117, 148);
+    c.stroke();
+
+  } else if(key === "SY"){          // 라디에이터 — 불꽃 머리, 화난 눈
+    c.fillStyle = P.body;
+    c.beginPath();
+    c.moveTo(100, 12);
+    c.bezierCurveTo(126, 48, 152, 56, 152, 92);
+    c.bezierCurveTo(152, 128, 128, 152, 100, 152);
+    c.bezierCurveTo(72, 152, 48, 128, 48, 92);
+    c.bezierCurveTo(48, 56, 74, 48, 100, 12);
+    c.closePath(); c.fill();
+    c.fillStyle = P.light;
+    c.beginPath(); c.ellipse(100, 112, 35, 30, 0, 0, 6.2832); c.fill();
+    c.strokeStyle = INK; c.lineWidth = 5;
+    c.beginPath(); c.moveTo(70, 88); c.lineTo(89, 97); c.moveTo(130, 88); c.lineTo(111, 97); c.stroke();
+    eye(81, 110, 8); eye(119, 110, 8);
+    c.lineWidth = 4;
+    c.beginPath();
+    c.moveTo(86, 132); c.lineTo(93, 126); c.lineTo(100, 132); c.lineTo(107, 126); c.lineTo(114, 132);
+    c.stroke();
+    c.strokeStyle = P.dark; c.lineWidth = 7;
+    c.beginPath();
+    c.moveTo(34, 128); c.quadraticCurveTo(24, 112, 34, 96);
+    c.moveTo(34, 158); c.quadraticCurveTo(26, 146, 34, 134);
+    c.moveTo(166, 128); c.quadraticCurveTo(176, 112, 166, 96);
+    c.moveTo(166, 158); c.quadraticCurveTo(174, 146, 166, 134);
+    c.stroke();
+
+  } else if(key === "SE"){          // 보온병 — 세로로 긴 몸, 목도리
+    c.fillStyle = P.dark;
+    c.beginPath(); c.roundRect(78, 22, 44, 26, 11); c.fill();
+    c.fillStyle = P.body;
+    c.beginPath(); c.roundRect(60, 44, 80, 132, 32); c.fill();
+    c.fillStyle = P.light;
+    c.beginPath(); c.roundRect(72, 66, 56, 52, 22); c.fill();
+    eye(88, 90, 7.5); eye(112, 90, 7.5);
+    c.strokeStyle = INK; c.lineWidth = 3.6;
+    c.beginPath(); c.moveTo(93, 106); c.quadraticCurveTo(100, 112, 107, 106); c.stroke();
+    c.fillStyle = "#cbf24e";
+    c.beginPath(); c.roundRect(52, 124, 96, 20, 10); c.fill();
+    c.beginPath(); c.roundRect(120, 136, 19, 36, 9); c.fill();
+    c.strokeStyle = P.dark; c.lineWidth = 5;
+    c.beginPath();
+    c.moveTo(152, 46); c.quadraticCurveTo(162, 34, 152, 22);
+    c.moveTo(170, 56); c.quadraticCurveTo(180, 44, 170, 32);
+    c.stroke();
+
+  } else {                          // 태양인 — 별. 레어
+    c.fillStyle = P.body;
+    c.beginPath();
+    for(let i = 0; i < 10; i++){
+      const ang = -Math.PI/2 + i*Math.PI/5;
+      const rad = i % 2 === 0 ? 82 : 38;
+      const px = 100 + Math.cos(ang)*rad, py = 104 + Math.sin(ang)*rad;
+      if(i === 0){ c.moveTo(px, py); } else { c.lineTo(px, py); }
+    }
+    c.closePath(); c.fill();
+    c.fillStyle = P.light;
+    c.beginPath(); c.ellipse(100, 106, 35, 30, 0, 0, 6.2832); c.fill();
+    eye(88, 100, 7.5); eye(112, 100, 7.5);
+    c.strokeStyle = INK; c.lineWidth = 3.8;
+    c.beginPath(); c.arc(100, 112, 11, 0.15*Math.PI, 0.85*Math.PI); c.stroke();
+    c.fillStyle = "#cbf24e";
+    [[30,40,8],[172,58,7],[40,168,7],[166,158,6]].forEach(function(p){
+      c.beginPath();
+      for(let i = 0; i < 8; i++){
+        const ang = -Math.PI/2 + i*Math.PI/4;
+        const rad = i % 2 === 0 ? p[2] : p[2]/2.6;
+        const px = p[0] + Math.cos(ang)*rad, py = p[1] + Math.sin(ang)*rad;
+        if(i === 0){ c.moveTo(px, py); } else { c.lineTo(px, py); }
+      }
+      c.closePath(); c.fill();
+    });
+  }
+  c.restore();
+}
 
 /* ============================================================
    STATE
    ============================================================ */
-const ALL = QA.map(function(x){return Object.assign({},x,{part:"A"});})
-   .concat(QB.map(function(x){return Object.assign({},x,{part:"B"});}));
 let cur = 0, ans = [];
 let profile = {name:"", sex:"", h:null, w:null};
-/* 공유물에 무엇을 담을지 — 신체 계측은 기본 비공개 */
 let shareOpts = {name:true, bio:false};
+const $ = function(s){ return document.querySelector(s); };
+const N = QUESTIONS.length;
 
-/* 대한비만학회 아시아·태평양 기준 */
 function bmiOf(p){
   if(!p.h || !p.w) return null;
   const m = p.h/100;
@@ -435,7 +606,6 @@ function bmiLabel(v){
   if(v < 25)   return "과체중";
   return "비만";
 }
-const $ = function(s){ return document.querySelector(s); };
 
 function show(id){
   document.querySelectorAll(".screen").forEach(function(s){ s.classList.remove("on"); });
@@ -444,27 +614,38 @@ function show(id){
 }
 
 function renderQ(){
-  const q = ALL[cur];
-  $("#qidx").textContent = String(cur+1).padStart(2,"0") + " / " + String(ALL.length).padStart(2,"0");
-  const pct = Math.round(cur/ALL.length*100);
+  const q = QUESTIONS[cur];
+  $("#qidx").textContent = String(cur+1).padStart(2,"0") + " / " + String(N).padStart(2,"0");
+  const pct = Math.round(cur/N*100);
   $("#qpct").textContent = pct + "%";
   $("#qfill").style.width = pct + "%";
-  $("#qtag").textContent = q.part === "A" ? "PART A · 체질" : "PART B · 지난 일주일";
+  const tag = $("#qtag");
+  tag.textContent = q.part === "F" ? "그냥 궁금해서" : (q.part === "A" ? "체질" : "지난 일주일");
+  tag.classList.toggle("fun", q.part === "F");
   $("#qtext").textContent = q.q;
   $("#qsub").textContent = q.sub || "";
+  $("#qsub").style.display = q.sub ? "" : "none";
+
   const box = $("#opts");
-  box.innerHTML = "";
+  box.innerHTML = "";                              // 매 문항 새 버튼 = 이전 선택 상태가 남지 않음
   q.a.forEach(function(o,i){
     const b = document.createElement("button");
+    b.type = "button";
     b.className = "opt";
-    const n = document.createElement("span"); n.className = "n"; n.textContent = String(i+1).padStart(2,"0");
+    const n = document.createElement("span"); n.className = "n"; n.textContent = i+1;
     const tx = document.createElement("span"); tx.textContent = o.t;
     b.appendChild(n); b.appendChild(tx);
     b.onclick = function(){
+      if(b.dataset.done) return;
+      b.dataset.done = "1";
+      b.classList.add("tapped");
+      b.blur();                                    // 포커스 잔상 제거
       ans[cur] = i;
       if(o.r){ toast(o.r); }
-      cur++;
-      if(cur < ALL.length){ renderQ(); } else { finish(); }
+      setTimeout(function(){
+        cur++;
+        if(cur < N){ renderQ(); } else { finish(); }
+      }, 150);
     };
     box.appendChild(b);
   });
@@ -473,106 +654,112 @@ function renderQ(){
 
 function score(){
   const s = {TE:0,SY:0,SE:0,TY:0};
-  QA.forEach(function(q,i){
+  const items = [], fun = [];
+  QUESTIONS.forEach(function(q,i){
     const o = q.a[ans[i]];
-    for(const k in o.s){ s[k] += o.s[k]; }
+    if(!o) return;
+    if(q.part === "A"){ for(const k in o.s){ s[k] += o.s[k]; } }
+    else if(q.part === "B"){ items.push({label:q.item, unit:o.u, val:o.v}); }
+    else { fun.push({label:q.item, unit:o.u}); }
   });
-  // 태양인은 강한 근거(9점 이상)가 있을 때만 채택 — 희소성 유지
-  let key;
-  if(s.TY >= 9){ key = "TY"; }
-  else {
-    key = ["TE","SY","SE"].reduce(function(a,b){ return s[b] > s[a] ? b : a; });
-  }
-  const items = QB.map(function(q,i){
-    const o = q.a[ans[QA.length+i]];
-    return {label:q.item, unit:o.u, val:o.v};
-  });
+  // 태양인은 근거가 확실할 때(9점 이상)만 — 희소성 유지
+  const key = s.TY >= 9 ? "TY" : ["TE","SY","SE"].reduce(function(a,b){ return s[b] > s[a] ? b : a; });
   const total = items.reduce(function(a,b){ return a + b.val; }, 0);
   const gr = GRADES.find(function(g){ return total >= g.min; });
   const hs = healthScore(total);
-  return {type:TYPES[key], key:key, items:items, total:total,
+  return {type:TYPES[key], key:key, items:items, fun:fun, total:total,
           grade:gr.g, gmsg:gr.m, hscore:hs, top:topPercent(hs), rank:rankLabel(topPercent(hs))};
 }
 
-/* 총액(-7,500 ~ +5,000)을 100점 척도로 환산 */
 function healthScore(total){
   return Math.max(1, Math.min(100, Math.round(62 + total/160)));
 }
-/* 정규분포 근사로 전국 상위 % 산출 */
 function erf(x){
   const sg = x < 0 ? -1 : 1; x = Math.abs(x);
   const a1=0.254829592,a2=-0.284496736,a3=1.421413741,a4=-1.453152027,a5=1.061405429,pp=0.3275911;
   const t = 1/(1+pp*x);
-  const y = 1 - (((((a5*t+a4)*t+a3)*t+a2)*t+a1)*t)*Math.exp(-x*x);
-  return sg*y;
+  return sg*(1 - (((((a5*t+a4)*t+a3)*t+a2)*t+a1)*t)*Math.exp(-x*x));
 }
-/* 상위 50%를 넘어가면 "하위 N%"로 뒤집어 표기 — 그쪽이 더 직관적이고 재미있다 */
+function topPercent(sc){
+  const cdf = 0.5*(1 + erf(((sc-NAT_MEAN)/NAT_SD)/Math.SQRT2));
+  return Math.min(99, Math.max(1, Math.round((1-cdf)*100)));
+}
+/* 상위 50%를 넘어가면 "하위 N%"로 뒤집는다 — 그게 더 직관적이고 웃기다 */
 function rankLabel(top){
   return top <= 50 ? ("상위 " + top + "%") : ("하위 " + (100 - top) + "%");
 }
-function topPercent(sc){
-  const z = (sc - NAT_MEAN)/NAT_SD;
-  const cdf = 0.5*(1 + erf(z/Math.SQRT2));
-  return Math.min(99, Math.max(1, Math.round((1-cdf)*100)));
-}
 
 function nf(n){ return (n > 0 ? "+" : "") + n.toLocaleString("ko-KR"); }
-
 function serial(){
   let h = 7;
   ans.forEach(function(v,i){ h = (h*31 + v*(i+3)) % 9973; });
   return String(h).padStart(4,"0");
 }
-
 function stamp(){
   const d = new Date(), p = function(n){ return String(n).padStart(2,"0"); };
   return d.getFullYear()+"."+p(d.getMonth()+1)+"."+p(d.getDate())+"  "+p(d.getHours())+":"+p(d.getMinutes());
+}
+function esc(t){
+  return String(t).replace(/[&<>"]/g, function(ch){
+    return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[ch];
+  });
 }
 
 function finish(){
   const r = score();
   window.__R = r;
   $("#qfill").style.width = "100%";
-  $("#receipt").innerHTML = receiptHTML(r);
+  const hc = $("#heroChar").getContext("2d");
+  hc.clearRect(0,0,300,300);
+  drawChar(hc, r.key, 150, 150, 280);
+  $("#heroCode").textContent = r.type.code + " · " + r.type.heat;
+  $("#heroName").textContent = r.type.name;
+  $("#heroNick").textContent = r.type.nick;
+  $("#heroLine").textContent = r.type.line;
   syncShare();
   show("result");
 }
 
-/* 공유 링크는 항상 현재 공유 설정만 담는다 — 주소창을 그대로 복사해도 안전하게 */
-function shareHash(){
-  const pf = [
-    shareOpts.name ? profile.name : "익명",
-    profile.sex,
-    shareOpts.bio && profile.h ? profile.h : "",
-    shareOpts.bio && profile.w ? profile.w : ""
-  ].join("|");
-  return "#r=" + ans.join("") + "&p=" + encodeURIComponent(pf);
+/* ============================================================
+   영수증 (DOM)
+   ============================================================ */
+function bioHTML(){
+  const v = bmiOf(profile);
+  let rows = '<div><span class="k">성별</span><span class="v">' + esc(profile.sex) + '</span></div>';
+  if(profile.h){ rows += '<div><span class="k">키</span><span class="v">' + profile.h + ' cm</span></div>'; }
+  if(profile.w){ rows += '<div><span class="k">체중</span><span class="v">' + profile.w + ' kg</span></div>'; }
+  if(v !== null){
+    rows += '<div><span class="k">체격 지수</span><span class="v">' + v.toFixed(1)
+          + ' <span class="tag">' + bmiLabel(v) + '</span></span></div>';
+  }
+  const hidden = !shareOpts.bio && (profile.h || profile.w);
+  const tag = hidden ? '<span class="pv">공유하면 가려짐 · 나만 보임</span>' : '<span>BIOMETRICS</span>';
+  return '<div class="dv2"></div>'
+       + '<div class="hd"><span>신체 계측</span>' + tag + '</div>'
+       + '<div class="bio">' + rows + '</div>'
+       + '<div class="dv2"></div>';
 }
 
-function shareURL(){
-  return location.origin + location.pathname + location.search + shareHash();
+function scoreHTML(r){
+  return '<div class="sbox">'
+  + '<div class="srow"><span class="sk">건강 점수</span><span class="sv"><b>' + r.hscore + '</b> / 100</span></div>'
+  + '<div class="srow"><span class="sk">전국 백분위</span><span class="sv hot"><b>' + r.rank + '</b></span></div>'
+  + '<div class="gauge"><div class="gf" style="width:' + r.hscore + '%"></div>'
+  +   '<div class="ga" style="left:' + NAT_MEAN + '%"></div></div>'
+  + '<div class="glab"><span>0</span><span class="c">전국 평균 ' + NAT_MEAN + '</span><span>100</span></div>'
+  + '</div>';
 }
 
-function syncShare(){
-  const nameOn = shareOpts.name, bioOn = shareOpts.bio;
-  const hasBio = !!(profile.h || profile.w);
-  $("#optName").checked = nameOn;
-  $("#optBio").checked = bioOn;
-  $("#stName").textContent = nameOn ? "공개" : "비공개";
-  $("#stBio").textContent  = bioOn ? "공개" : "비공개";
-  $("#stName").classList.toggle("on", nameOn);
-  $("#stBio").classList.toggle("on", bioOn);
-  $("#optBio").disabled = !hasBio;
-  $("#optBio").closest(".sw").style.opacity = hasBio ? "1" : ".45";
-
-  const bits = [];
-  bits.push(nameOn ? "이름 <b>" + esc(profile.name) + "</b>" : "이름 <b>익명</b>");
-  if(hasBio){ bits.push(bioOn ? "키·몸무게 <b>포함</b>" : "키·몸무게 <b>제외</b>"); }
-  $("#soState").innerHTML = "지금 저장하면 &nbsp;→&nbsp; " + bits.join(" &nbsp;·&nbsp; ")
-    + "<br>끈 항목은 이미지에도, 공유 링크에도 들어가지 않습니다.";
-
-  $("#receipt").innerHTML = receiptHTML(window.__R);
-  location.hash = shareHash().slice(1);
+function distHTML(r){
+  const rows = DIST.map(function(d){
+    const me = d.k === r.key;
+    return '<div class="drow ' + (me ? "on" : "") + '">'
+      + '<span class="dn">' + d.n + '</span>'
+      + '<span class="db"><i style="width:' + d.w + '%"></i></span>'
+      + '<span class="dp">' + d.p + '%</span>'
+      + '<span class="dme">' + (me ? "← 나" : "") + '</span></div>';
+  }).join("");
+  return '<div class="dist"><div class="dtitle">대한민국 체질 분포</div>' + rows + '</div>';
 }
 
 function receiptHTML(r){
@@ -581,9 +768,12 @@ function receiptHTML(r){
   for(let i=0;i<44;i++){ bars += '<i style="height:' + (12 + ((i*37) % 24)) + 'px"></i>'; }
   const rows = r.items.map(function(i){
     return '<div class="row ' + (i.val < 0 ? "neg" : "") + '">'
-      + '<span class="l">' + i.label + '</span>'
-      + '<span class="m">' + i.unit + '</span>'
+      + '<span class="l">' + i.label + '</span><span class="m">' + i.unit + '</span>'
       + '<span class="r">' + nf(i.val) + '</span></div>';
+  }).join("");
+  const funRows = r.fun.map(function(i){
+    return '<div class="row"><span class="l">' + i.label + '</span>'
+      + '<span class="m">' + i.unit + '</span><span class="r">₩0</span></div>';
   }).join("");
   return ''
   + '<img class="rlogo" src="' + LOGO_INK + '" alt="VYNEHERB">'
@@ -592,18 +782,17 @@ function receiptHTML(r){
   + '<div class="dv"></div>'
   + '<div class="meta">' + stamp() + ' &nbsp; ' + CFG.venue + '<br>NO. ' + serial() + ' &nbsp;&nbsp; ' + CFG.pos
   +   '<br>성명 &nbsp; ' + esc(profile.name) + ' 님'
-  +   (shareOpts.name ? '' : ' <span class="pv">공유 시 익명</span>') + '</div>'
-  + '<div class="dv2"></div>'
-  + '<div class="ctype">'
-  +   '<div class="ccode">' + t.code + '</div>'
-  +   '<div class="cname">' + t.name + '</div>'
-  +   '<div class="cheat">' + t.heat + '</div>'
-  +   '<div class="cnick">' + t.nick + '</div>'
-  +   '<div class="cline">' + t.line + '</div>'
-  + '</div>'
+  +   (shareOpts.name ? '' : ' <span class="pv">공유하면 익명</span>') + '</div>'
   + bioHTML()
-  + '<div class="hd"><span>품목</span><span>수량 &nbsp;&nbsp;&nbsp; 건강가</span></div>'
+  + '<div class="ctype"><div class="ccode">' + t.code + '</div>'
+  +   '<div class="cname">' + t.name + '</div>'
+  +   '<div class="cheat">' + t.heat + '</div></div>'
+  + '<div class="dv2"></div>'
+  + '<div class="hd"><span>품목</span><span>수량 &nbsp;&nbsp; 건강가</span></div>'
   + rows
+  + '<div class="dv"></div>'
+  + '<div class="hd"><span>서비스 (무료)</span><span>SERVICE</span></div>'
+  + funRows
   + '<div class="dv"></div>'
   + '<div class="total"><span>합 계</span><span class="r" style="' + (r.total < 0 ? "color:var(--hot)" : "") + '">' + nf(r.total) + '</span></div>'
   + '<div class="grade"><span class="lab">건강 학점</span><span class="g">' + r.grade + '</span></div>'
@@ -617,71 +806,95 @@ function receiptHTML(r){
   +   '<div><span class="k">챙길 것</span><span class="v">' + t.good + '</span></div>'
   +   '<div><span class="k">피할 것</span><span class="v">' + t.bad + '</span></div>'
   +   '<div><span class="k">활 동</span><span class="v">' + t.act + '</span></div>'
-  +   '<div><span class="k">찰떡궁합</span><span class="v">' + t.mate + ' — 태그해서 확인시키기</span></div>'
+  +   '<div><span class="k">찰떡궁합</span><span class="v">' + t.mate + ' · 태그해서 확인시키기</span></div>'
   +   '<div><span class="k">상 극</span><span class="v">' + t.anti + '</span></div>'
   +   '<div><span class="k">희 귀 도</span><span class="v">' + t.rate + '</span></div>'
   + '</div>'
-  + '<div class="tagline">이 영수증은 환불되지 않습니다.<br>다음 주는 다르게 결제해 보세요.</div>'
+  + '<div class="tagline">이 영수증은 환불 안 됨.<br>다음 주는 다르게 결제해 보자.</div>'
   + '<div class="barcode">' + bars + '</div>'
-  + '<div class="rfoot">'
-  +   '<img class="qr" src="' + QR_IMG + '" alt="QR">'
+  + '<div class="rfoot"><img class="qr" src="' + QR_IMG + '" alt="QR">'
   +   '<div class="ig">' + CFG.ig + '</div>'
   +   '<div class="tags">' + CFG.tags + ' #' + t.name + '</div>'
-  +   '<div class="dis">※ 재미로 보는 생활 습관 테스트이며 의학적 진단이 아닙니다.</div>'
-  + '</div>';
-}
-
-function esc(t){
-  return String(t).replace(/[&<>"]/g, function(ch){
-    return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[ch];
-  });
-}
-
-function bioHTML(){
-  const v = bmiOf(profile);
-  let rows = '<div><span class="k">성별</span><span class="v">' + esc(profile.sex) + '</span></div>';
-  if(profile.h){ rows += '<div><span class="k">키</span><span class="v">' + profile.h + ' cm</span></div>'; }
-  if(profile.w){ rows += '<div><span class="k">체중</span><span class="v">' + profile.w + ' kg</span></div>'; }
-  if(v !== null){
-    rows += '<div><span class="k">체격 지수</span><span class="v">' + v.toFixed(1)
-          + ' <span class="tag">' + bmiLabel(v) + '</span></span></div>';
-  }
-  const hidden = !shareOpts.bio && (profile.h || profile.w);
-  const tag = hidden ? '<span class="pv">공유 시 가려짐 · 나만 보임</span>' : '<span>BIOMETRICS</span>';
-  return '<div class="dv2"></div>'
-       + '<div class="hd"><span>신체 계측</span>' + tag + '</div>'
-       + '<div class="bio">' + rows + '</div>'
-       + '<div class="dv2"></div>';
-}
-
-function scoreHTML(r){
-  return ''
-  + '<div class="sbox">'
-  +   '<div class="srow"><span class="sk">건강 점수</span><span class="sv"><b>' + r.hscore + '</b> / 100</span></div>'
-  +   '<div class="srow"><span class="sk">전국 백분위</span><span class="sv hot"><b>' + r.rank + '</b></span></div>'
-  +   '<div class="gauge">'
-  +     '<div class="gf" style="width:' + r.hscore + '%"></div>'
-  +     '<div class="ga" style="left:' + NAT_MEAN + '%"></div>'
-  +   '</div>'
-  +   '<div class="glab"><span>0</span><span class="c">전국 평균 ' + NAT_MEAN + '</span><span>100</span></div>'
-  + '</div>';
-}
-
-function distHTML(r){
-  const rows = DIST.map(function(d){
-    const me = d.k === r.key;
-    return '<div class="drow ' + (me ? "on" : "") + '">'
-      + '<span class="dn">' + d.n + '</span>'
-      + '<span class="db"><i style="width:' + d.w + '%"></i></span>'
-      + '<span class="dp">' + d.p + '%</span>'
-      + '<span class="dme">' + (me ? "← 나" : "") + '</span>'
-      + '</div>';
-  }).join("");
-  return '<div class="dist"><div class="dtitle">대한민국 체질 분포</div>' + rows + '</div>';
+  +   '<div class="dis">※ 재미로 보는 생활 습관 테스트이며 의학적 진단이 아닙니다.</div></div>';
 }
 
 /* ============================================================
-   STORY CARD (1080 x 1920) — canvas 직접 렌더
+   공유 설정
+   ============================================================ */
+function shareHash(){
+  const pf = [
+    shareOpts.name ? profile.name : "익명",
+    profile.sex,
+    shareOpts.bio && profile.h ? profile.h : "",
+    shareOpts.bio && profile.w ? profile.w : ""
+  ].join("|");
+  return "#r=" + ans.join("") + "&p=" + encodeURIComponent(pf);
+}
+function shareURL(){
+  return location.origin + location.pathname + location.search + shareHash();
+}
+function syncShare(){
+  const nameOn = shareOpts.name, bioOn = shareOpts.bio;
+  const hasBio = !!(profile.h || profile.w);
+  $("#optName").checked = nameOn;
+  $("#optBio").checked = bioOn;
+  $("#stName").textContent = nameOn ? "공개" : "비공개";
+  $("#stBio").textContent  = bioOn ? "공개" : "비공개";
+  $("#stName").classList.toggle("on", nameOn);
+  $("#stBio").classList.toggle("on", bioOn);
+  $("#optBio").disabled = !hasBio;
+  $("#optBio").closest(".sw").style.opacity = hasBio ? "1" : ".45";
+
+  const bits = [nameOn ? "이름 <b>" + esc(profile.name) + "</b>" : "이름 <b>익명</b>"];
+  if(hasBio){ bits.push(bioOn ? "키·몸무게 <b>포함</b>" : "키·몸무게 <b>제외</b>"); }
+  $("#soState").innerHTML = "지금 저장하면 → " + bits.join(" · ")
+    + "<br>끈 항목은 이미지에도 링크에도 안 들어감.";
+
+  $("#receipt").innerHTML = receiptHTML(window.__R);
+  location.hash = shareHash().slice(1);
+}
+
+function rgba(hex, a){
+  const n = parseInt(hex.slice(1), 16);
+  return "rgba(" + ((n>>16)&255) + "," + ((n>>8)&255) + "," + (n&255) + "," + a + ")";
+}
+
+/* 카드 배경 — 단색 대신 글로우 + 사선 + 티커 + 그레인 */
+function paintBackdrop(c, W, H, accent){
+  const g = c.createLinearGradient(0, 0, W*0.4, H);
+  g.addColorStop(0, "#141a0c"); g.addColorStop(0.55, "#0b0c09"); g.addColorStop(1, "#10130a");
+  c.fillStyle = g; c.fillRect(0, 0, W, H);
+
+  let rg = c.createRadialGradient(170, 210, 0, 170, 210, 820);
+  rg.addColorStop(0, "rgba(203,242,78,.30)"); rg.addColorStop(1, "rgba(203,242,78,0)");
+  c.fillStyle = rg; c.fillRect(0, 0, W, H);
+
+  rg = c.createRadialGradient(930, 1700, 0, 930, 1700, 840);
+  rg.addColorStop(0, rgba(accent, .34)); rg.addColorStop(1, rgba(accent, 0));
+  c.fillStyle = rg; c.fillRect(0, 0, W, H);
+
+  c.save();                                        // 사선 헤어라인
+  c.strokeStyle = "rgba(255,255,255,.038)"; c.lineWidth = 2;
+  for(let x = -H; x < W + H; x += 28){
+    c.beginPath(); c.moveTo(x, 0); c.lineTo(x + H, H); c.stroke();
+  }
+  c.restore();
+
+  c.font = '700 32px "Nanum Gothic Coding", monospace';   // 위아래 티커
+  c.textAlign = "left"; c.textBaseline = "middle";
+  let line = "";
+  while(c.measureText(line).width < W + 300){ line += "HEALTH RECEIPT · VYNEHERB · "; }
+  c.fillStyle = "rgba(203,242,78,.26)"; c.fillText(line, -50, 48);
+  c.fillStyle = "rgba(255,255,255,.13)"; c.fillText(line, -190, H - 48);
+
+  let seed = 20260828;                             // 결정적 그레인
+  const rnd = function(){ seed = (seed*1103515245 + 12345) & 0x7fffffff; return seed/0x7fffffff; };
+  c.fillStyle = "rgba(255,255,255,.05)";
+  for(let i = 0; i < 900; i++){ c.fillRect(rnd()*W, rnd()*H, 2, 2); }
+}
+
+/* ============================================================
+   스토리 카드 (1080 × 1920)
    ============================================================ */
 const IMGS = {};
 function loadImg(src){
@@ -698,10 +911,10 @@ async function buildCard(r){
   }catch(e){}
 
   const cv = $("#cv"), c = cv.getContext("2d");
-  const W = 1080, H = 1920, PX = 70, PW = 940, PAD = 46;
+  const W = 1080, H = 1920, PX = 70, PW = 940, PAD = 44;
   const L = PX + PAD, R = PX + PW - PAD, CX = PX + PW/2, IW = PW - PAD*2;
   const t = r.type;
-  const INK = "#1a1a1a", INK2 = "#6b665c", INK3 = "#a39d90", HOT = "#c4452f", PAPER = "#f4f1ea";
+  const INK = "#14150f", INK2 = "#67655a", INK3 = "#a3a094", HOT = "#ff5c3a", PAPER = "#f7f6f1";
 
   const ops = [];
   const F = function(w,s){ return w + ' ' + s + 'px "Nanum Gothic Coding", monospace'; };
@@ -729,14 +942,12 @@ async function buildCard(r){
       }
     });
   };
-
   const wrap = function(txt,o){
     o = o || {};
     const size = o.size || 24, color = o.color || INK2, lh = o.lh || 1.7;
     const align = o.align || "center", mt = o.mt || 0, mb = o.mb || 0, weight = o.weight || 400;
     c.font = F(weight,size);
-    const words = txt.split(" ");
-    const lines = []; let ln = "";
+    const words = txt.split(" "); const lines = []; let ln = "";
     words.forEach(function(w){
       const tst = ln ? ln + " " + w : w;
       if(c.measureText(tst).width > IW && ln){ lines.push(ln); ln = w; } else { ln = tst; }
@@ -748,56 +959,57 @@ async function buildCard(r){
       lines.forEach(function(l,i){ c.fillText(l, align === "center" ? CX : L, y + mt + size*lh*(i+0.5)); });
     });
   };
-
   const dash = function(m){
-    m = m === undefined ? 22 : m;
+    m = m === undefined ? 16 : m;
     push(m*2 + 2, function(y){
       c.strokeStyle = "#b9b2a2"; c.lineWidth = 2; c.setLineDash([9,9]);
       c.beginPath(); c.moveTo(L, y+m); c.lineTo(R, y+m); c.stroke(); c.setLineDash([]);
     });
   };
   const solid = function(m){
-    m = m === undefined ? 24 : m;
+    m = m === undefined ? 14 : m;
     push(m*2 + 8, function(y){ c.fillStyle = INK; c.fillRect(L,y+m,R-L,3); c.fillRect(L,y+m+7,R-L,3); });
   };
-  const gap = function(h){ push(h, function(){}); };
-
   const row = function(l,mid,rt,neg){
-    push(58, function(y){
+    push(56, function(y){
       c.textBaseline = "middle";
-      const yy = y + 29;
-      c.font = F(400,35); c.fillStyle = INK;  c.textAlign = "left";  c.fillText(l, L, yy);
-      c.font = F(400,27); c.fillStyle = INK2; c.textAlign = "right"; c.fillText(mid, R-200, yy);
-      c.font = F(400,35); c.fillStyle = neg ? HOT : INK; c.textAlign = "right"; c.fillText(rt, R, yy);
+      const yy = y + 28;
+      c.font = F(400,34); c.fillStyle = INK;  c.textAlign = "left";  c.fillText(l, L, yy);
+      c.font = F(400,26); c.fillStyle = INK2; c.textAlign = "right"; c.fillText(mid, R-190, yy);
+      c.font = F(400,34); c.fillStyle = neg ? HOT : INK; c.textAlign = "right"; c.fillText(rt, R, yy);
     });
   };
-
+  const hdr = function(l,rt){
+    push(42, function(y){
+      c.font = F(400,22); c.fillStyle = INK3; c.textBaseline = "middle";
+      c.textAlign = "left";  c.fillText(l, L, y+21);
+      c.textAlign = "right"; c.fillText(rt, R, y+21);
+    });
+  };
   const kv = function(k,v){
-    c.font = F(400,29);
-    const words = v.split(" "); const lines = []; let ln = ""; const vw = IW - 190;
+    c.font = F(400,28);
+    const words = v.split(" "); const lines = []; let ln = ""; const vw = IW - 185;
     words.forEach(function(w){
       const tst = ln ? ln + " " + w : w;
       if(c.measureText(tst).width > vw && ln){ lines.push(ln); ln = w; } else { ln = tst; }
     });
     if(ln){ lines.push(ln); }
-    push(lines.length*48, function(y){
+    push(lines.length*46, function(y){
       c.textBaseline = "middle"; c.textAlign = "left";
-      c.font = F(400,29); c.fillStyle = INK3; c.fillText(k, L, y+24);
+      c.font = F(400,28); c.fillStyle = INK3; c.fillText(k, L, y+23);
       c.fillStyle = INK;
-      lines.forEach(function(l,i){ c.fillText(l, L+190, y+24+i*48); });
+      lines.forEach(function(l,i){ c.fillText(l, L+185, y+23+i*46); });
     });
   };
 
-  /* ---- compose ---- */
-  const lw = 340, lgh = Math.round(lw * IMGS.logo.height / IMGS.logo.width);
-  push(lgh + 40, function(y){ c.drawImage(IMGS.logo, CX-lw/2, y, lw, lgh); });
-  text("건강영수증", {size:52, weight:700, align:"center", ls:22, lh:1.5, mb:6});
-  text("HEALTH RECEIPT", {size:22, color:INK2, align:"center", ls:11, lh:1.5});
-  dash(16);
-  text(stamp() + "  ·  " + CFG.venue + "  ·  NO." + serial(), {size:25, color:INK2, align:"center", lh:1.5});
-  /* 공유 설정을 그대로 따른다 — 끈 항목은 이미지에 아예 그리지 않는다 */
-  text("성명  " + (shareOpts.name ? profile.name : "익명") + " 님",
-       {size:27, color:INK, align:"center", lh:1.5});
+  /* ---- 구성 ---- */
+  const lw = 300, lgh = Math.round(lw * IMGS.logo.height / IMGS.logo.width);
+  push(lgh + 26, function(y){ c.drawImage(IMGS.logo, CX-lw/2, y, lw, lgh); });
+  text("건강영수증", {size:48, weight:700, align:"center", ls:20, lh:1.4, mb:4});
+  text("HEALTH RECEIPT", {size:21, color:INK2, align:"center", ls:10, lh:1.4});
+  dash();
+  text(stamp() + "  ·  " + CFG.venue + "  ·  NO." + serial(), {size:24, color:INK2, align:"center", lh:1.45});
+  text("성명  " + (shareOpts.name ? profile.name : "익명") + " 님", {size:28, color:INK, align:"center", lh:1.45});
   (function(){
     const bits = [profile.sex];
     if(shareOpts.bio){
@@ -806,46 +1018,45 @@ async function buildCard(r){
       if(profile.w){ bits.push(profile.w + "kg"); }
       if(v !== null){ bits.push("BMI " + v.toFixed(1) + " " + bmiLabel(v)); }
     }
-    text(bits.join("  ·  "), {size:23, color:INK2, align:"center", lh:1.5});
+    text(bits.join("  ·  "), {size:23, color:INK2, align:"center", lh:1.45});
   })();
-  solid(14);
-  text(t.code + "   " + t.heat, {size:28, color:INK2, align:"center", ls:5, lh:1.5, mb:8});
-  text(t.name, {size:88, weight:700, align:"center", lh:1.3, mb:4});
-  text(t.nick, {size:40, weight:700, color:HOT, align:"center", lh:1.5, mb:4});
-  wrap(t.line, {size:29, color:INK2, align:"center", lh:1.6});
-  solid(14);
-  push(46, function(y){
-    c.font = F(400,24); c.fillStyle = INK3; c.textBaseline = "middle";
-    c.textAlign = "left";  c.fillText("품목", L, y+23);
-    c.textAlign = "right"; c.fillText("수량         건강가", R, y+23);
-  });
+  solid();
+  push(296, function(y){ drawChar(c, r.key, CX, y+146, 286); });
+  text(t.code + "   " + t.heat, {size:27, color:INK2, align:"center", ls:5, lh:1.4, mb:4});
+  text(t.name, {size:92, weight:700, align:"center", lh:1.26, mb:2});
+  text(t.nick, {size:42, weight:700, color:HOT, align:"center", lh:1.4, mb:2});
+  wrap(t.line, {size:28, color:INK2, align:"center", lh:1.55});
+  solid();
+  hdr("품목", "수량        건강가");
   r.items.forEach(function(i){ row(i.label, i.unit, nf(i.val), i.val < 0); });
-  dash(12);
+  dash(10);
+  hdr("서비스 (무료)", "SERVICE");
+  r.fun.forEach(function(i){ row(i.label, i.unit, "₩0", false); });
+  dash(10);
   push(76, function(y){
-    c.textBaseline = "middle";
-    const yy = y + 38;
+    c.textBaseline = "middle"; const yy = y + 38;
     c.font = F(700,40); c.fillStyle = INK; c.textAlign = "left"; c.fillText("합 계", L, yy);
     c.font = F(700,52); c.fillStyle = r.total < 0 ? HOT : INK; c.textAlign = "right"; c.fillText(nf(r.total), R, yy);
   });
-  push(126, function(y){
+  push(122, function(y){
     c.textBaseline = "middle";
-    c.font = F(400,28);  c.fillStyle = INK2; c.textAlign = "left";  c.fillText("건강 학점", L, y+63);
-    c.font = F(700,128); c.fillStyle = INK;  c.textAlign = "right"; c.fillText(r.grade, R, y+63);
+    c.font = F(400,28);  c.fillStyle = INK2; c.textAlign = "left";  c.fillText("건강 학점", L, y+61);
+    c.font = F(700,126); c.fillStyle = INK;  c.textAlign = "right"; c.fillText(r.grade, R, y+61);
   });
-  wrap(r.gmsg, {size:29, color:INK2, align:"right", lh:1.55, mt:2});
-  solid(14);
+  wrap(r.gmsg, {size:28, color:INK2, align:"center", lh:1.5, mt:2});
+  solid();
   push(52, function(y){
     c.textBaseline = "middle"; const yy = y+26;
     c.font = F(400,28); c.fillStyle = INK2; c.textAlign = "left"; c.fillText("건강 점수", L, yy);
     c.textAlign = "right";
     c.font = F(400,26); c.fillStyle = INK2; c.fillText(" / 100", R, yy);
     const tw = c.measureText(" / 100").width;
-    c.font = F(700,42); c.fillStyle = INK; c.fillText(String(r.hscore), R - tw, yy);
+    c.font = F(700,44); c.fillStyle = INK; c.fillText(String(r.hscore), R - tw, yy);
   });
   push(52, function(y){
     c.textBaseline = "middle"; const yy = y+26;
     c.font = F(400,28); c.fillStyle = INK2; c.textAlign = "left";  c.fillText("전국 백분위", L, yy);
-    c.font = F(700,38); c.fillStyle = HOT;  c.textAlign = "right"; c.fillText(r.rank, R, yy);
+    c.font = F(700,40); c.fillStyle = HOT;  c.textAlign = "right"; c.fillText(r.rank, R, yy);
   });
   push(96, function(y){
     const gw = R - L, gh = 18, gy = y + 18;
@@ -854,38 +1065,41 @@ async function buildCard(r){
     c.strokeStyle = INK; c.lineWidth = 2; c.strokeRect(L, gy, gw, gh);
     c.fillStyle = HOT; c.fillRect(L + gw*NAT_MEAN/100 - 1.5, gy-7, 3, gh+14);
     c.font = F(400,20); c.textBaseline = "middle";
-    c.fillStyle = "#a39d90"; c.textAlign = "left";  c.fillText("0", L, gy+gh+32);
+    c.fillStyle = INK3; c.textAlign = "left";  c.fillText("0", L, gy+gh+32);
     c.textAlign = "right"; c.fillText("100", R, gy+gh+32);
     c.fillStyle = HOT; c.textAlign = "center"; c.fillText("전국 평균 " + NAT_MEAN, L + gw*NAT_MEAN/100, gy+gh+32);
   });
-  solid(14);
-  kv("찰떡궁합", t.mate + " · 태그해서 확인시키기");
+  solid();
+  kv("찰떡궁합", t.mate + " · 태그해");
   kv("희 귀 도", t.rate);
-
+  push(18, function(){});
   push(168, function(y){
     c.drawImage(IMGS.qr, CX-58, y, 116, 116);
     c.font = F(700,36); c.fillStyle = INK; c.textAlign = "center"; c.textBaseline = "middle";
     c.fillText(CFG.ig, CX, y+146);
   });
-  text(CFG.tags + " #" + t.name, {size:26, color:INK2, align:"center", lh:1.5, mt:6});
-  text("※ 재미로 보는 생활 습관 테스트이며 의학적 진단이 아닙니다.", {size:20, color:INK3, align:"center", lh:1.5, mt:10});
+  text(CFG.tags + " #" + t.name, {size:25, color:INK2, align:"center", lh:1.4, mt:4});
+  text("※ 재미로 보는 테스트이며 의학적 진단이 아닙니다.", {size:20, color:INK3, align:"center", lh:1.4, mt:8});
 
-  /* ---- paint ---- */
+  /* ---- 그리기 ---- */
   const totalH = ops.reduce(function(a,o){ return a + o.h; }, 0);
   const bodyH = totalH + PAD*2;
-  const AVAIL = H - 130;                        // 위아래 여백
-  const k = Math.min(1, AVAIL / bodyH);         // 넘치면 통째로 축소
+
+  const TH = -2.2 * Math.PI/180;                  // 살짝 기울여서 붙여놓은 느낌
+  const cs = Math.cos(TH), sn = Math.abs(Math.sin(TH));
+  const k = Math.min(1, (H-150)/(bodyH*cs + PW*sn), (W-80)/(PW*cs + bodyH*sn));
 
   c.setTransform(1,0,0,1,0,0);
-  c.fillStyle = "#141310"; c.fillRect(0,0,W,H);
+  paintBackdrop(c, W, H, CHAR_COLOR[r.key].body);
 
   c.save();
-  c.translate((W - PW*k)/2, Math.round((H - bodyH*k)/2));
-  c.scale(k,k);
-  c.translate(-PX, 0);                          // PX 기준 좌표계를 그대로 사용
+  c.translate(W/2, H/2);
+  c.rotate(TH);
+  c.scale(k, k);
+  c.translate(-PX - PW/2, -bodyH/2);
 
   c.save();
-  c.shadowColor = "rgba(0,0,0,.55)"; c.shadowBlur = 60; c.shadowOffsetY = 22;
+  c.shadowColor = "rgba(0,0,0,.6)"; c.shadowBlur = 70; c.shadowOffsetY = 26;
   c.fillStyle = PAPER; c.fillRect(PX, 0, PW, bodyH);
   c.restore();
 
@@ -904,13 +1118,14 @@ async function buildCard(r){
 }
 
 /* ============================================================
-   ACTIONS
+   동작
    ============================================================ */
 function toast(msg){
   const t = $("#toast");
   t.textContent = msg;
   t.classList.add("on");
-  setTimeout(function(){ t.classList.remove("on"); }, 1900);
+  clearTimeout(toast._t);
+  toast._t = setTimeout(function(){ t.classList.remove("on"); }, 1800);
 }
 
 $("#start").onclick = function(){ show("intake"); setTimeout(function(){ $("#fName").focus(); }, 120); };
@@ -926,11 +1141,11 @@ document.querySelectorAll("#fSex button").forEach(function(b){
 
 $("#toQuiz").onclick = function(){
   const nm = $("#fName").value.trim();
-  if(!nm){ $("#fErr").textContent = "성명 또는 닉네임을 입력해 주세요."; $("#fName").focus(); return; }
-  if(!profile.sex){ $("#fErr").textContent = "성별을 선택해 주세요."; return; }
+  if(!nm){ $("#fErr").textContent = "이름이나 닉네임 하나만 적어줘."; $("#fName").focus(); return; }
+  if(!profile.sex){ $("#fErr").textContent = "성별도 골라줘."; return; }
   const h = parseInt($("#fH").value, 10), w = parseInt($("#fW").value, 10);
-  if($("#fH").value && (isNaN(h) || h < 100 || h > 230)){ $("#fErr").textContent = "키는 100~230cm 범위로 입력해 주세요."; return; }
-  if($("#fW").value && (isNaN(w) || w < 25 || w > 200)){ $("#fErr").textContent = "몸무게는 25~200kg 범위로 입력해 주세요."; return; }
+  if($("#fH").value && (isNaN(h) || h < 100 || h > 230)){ $("#fErr").textContent = "키는 100~230cm로 적어줘."; return; }
+  if($("#fW").value && (isNaN(w) || w < 25 || w > 200)){ $("#fErr").textContent = "몸무게는 25~200kg로 적어줘."; return; }
   profile.name = nm;
   profile.h = $("#fH").value ? h : null;
   profile.w = $("#fW").value ? w : null;
@@ -938,49 +1153,47 @@ $("#toQuiz").onclick = function(){
   cur = 0; ans = [];
   show("quiz"); renderQ();
 };
+
 $("#back").onclick  = function(){ if(cur > 0){ cur--; renderQ(); } else { show("intake"); } };
 $("#again").onclick = function(){ location.hash = ""; cur = 0; ans = []; show("intake"); };
-
 $("#optName").onchange = function(){ shareOpts.name = this.checked; syncShare(); };
 $("#optBio").onchange  = function(){ shareOpts.bio  = this.checked; syncShare(); };
 
 $("#copy").onclick = async function(){
-  try{ await navigator.clipboard.writeText(shareURL()); toast("링크를 복사했습니다"); }
-  catch(e){ toast("주소창의 링크를 복사해 주세요"); }
+  try{ await navigator.clipboard.writeText(shareURL()); toast("링크 복사했어"); }
+  catch(e){ toast("주소창 링크를 복사해줘"); }
 };
 
 async function makeFile(){
   const cv = await buildCard(window.__R);
-  const blob = await new Promise(function(res){ cv.toBlob(res, "image/png"); });
-  return {blob:blob, file:new File([blob], "health-receipt.png", {type:"image/png"})};
+  const blob = await new Promise(function(res){ cv.toBlob(res, "image/jpeg", 0.93); });
+  return {blob:blob, file:new File([blob], "health-receipt.jpg", {type:"image/jpeg"})};
 }
 function busy(btn, on, label){
   if(on){ btn.dataset.old = btn.textContent; btn.textContent = label; btn.disabled = true; }
   else { btn.textContent = btn.dataset.old; btn.disabled = false; }
 }
 
-/* 이미지 저장 — 항상 파일로 내려받기 */
 $("#save").onclick = async function(e){
   const btn = e.currentTarget;
-  busy(btn, true, "영수증 출력 중…");
+  busy(btn, true, "뽑는 중…");
   try{
     const m = await makeFile();
     const url = URL.createObjectURL(m.blob);
     const a = document.createElement("a");
-    a.href = url; a.download = "health-receipt.png";
+    a.href = url; a.download = "health-receipt.jpg";
     document.body.appendChild(a); a.click(); a.remove();
     setTimeout(function(){ URL.revokeObjectURL(url); }, 5000);
-    toast("이미지를 저장했습니다");
-  }catch(err){ toast("저장에 실패했습니다. 화면을 캡처해 주세요"); }
+    toast("저장 완료");
+  }catch(err){ toast("저장 실패. 화면 캡처해줘"); }
   busy(btn, false);
 };
 
-/* 공유하기 — 이미지 첨부 공유 → 링크 공유 → 복사 순으로 폴백 */
 $("#share").onclick = async function(e){
   const btn = e.currentTarget;
   const r = window.__R;
-  const msg = "내 체질은 " + r.type.name + " " + r.type.nick + " · 건강 점수 " + r.hscore + "점 (전국 " + r.rank + ")";
-  busy(btn, true, "공유 준비 중…");
+  const msg = "내 체질 " + r.type.name + " " + r.type.nick + " · 건강 점수 " + r.hscore + "점 (전국 " + r.rank + ")";
+  busy(btn, true, "준비 중…");
   try{
     const m = await makeFile();
     if(navigator.canShare && navigator.canShare({files:[m.file]})){
@@ -989,18 +1202,17 @@ $("#share").onclick = async function(e){
       await navigator.share({title:"건강 영수증", text:msg, url:shareURL()});
     } else {
       await navigator.clipboard.writeText(msg + String.fromCharCode(10) + shareURL());
-      toast("공유 문구와 링크를 복사했습니다");
+      toast("공유 문구랑 링크 복사했어");
     }
   }catch(err){
-    if(err && err.name === "AbortError"){ /* 사용자가 취소 */ }
-    else { toast("공유에 실패했습니다. 이미지 저장을 이용해 주세요"); }
+    if(!err || err.name !== "AbortError"){ toast("공유 실패. 이미지 저장으로 해줘"); }
   }
   busy(btn, false);
 };
 
 /* 공유 링크로 들어온 경우 결과 바로 표시 */
 (function boot(){
-  const m = location.hash.match(/r=([0-3]{11})/);
+  const m = location.hash.match(/r=([0-3]{14})/);
   if(!m) return;
   const pm = location.hash.match(/[#&]p=([^&]*)/);
   if(pm){
@@ -1009,10 +1221,11 @@ $("#share").onclick = async function(e){
     profile.sex  = parts[1] || "비공개";
     profile.h    = parts[2] ? parseInt(parts[2],10) : null;
     profile.w    = parts[3] ? parseInt(parts[3],10) : null;
+    shareOpts.bio = !!(profile.h || profile.w);
   }
-  if(!profile.name) return;           // 이름 없는 링크는 접수부터
+  if(!profile.name) return;
   ans = m[1].split("").map(Number);
-  cur = ALL.length;
+  cur = QUESTIONS.length;
   finish();
 })();
 </script>
