@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>건강 영수증 — 너 지금 몇 점짜리 몸이야?</title>
-<meta name="description" content="14문항 1분. 내 체질이랑 지난 일주일이 영수증으로 나옴.">
+<meta name="description" content="16문항 1분. 내 체질이랑 지난 일주일이 영수증으로 나옴.">
 <meta property="og:title" content="너 지금 몇 점짜리 몸이야?">
-<meta property="og:description" content="14문항 1분이면 내 체질이랑 건강 점수가 영수증으로 나옴.">
+<meta property="og:description" content="16문항 1분이면 내 체질이랑 건강 점수가 영수증으로 나옴.">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#0c0d0b">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -67,7 +67,6 @@ body{font-family:var(--sans);background:var(--bg);color:#fff;-webkit-font-smooth
 /* ---------- QUIZ ---------- */
 .qtag{display:inline-flex;align-items:center;align-self:flex-start;font-size:11px;font-weight:800;
   color:#111;background:var(--acid);padding:5px 10px;border-radius:6px;margin-bottom:16px}
-.qtag.fun{background:#ff5c3a;color:#fff}
 .qtext{font-size:29px;font-weight:800;line-height:1.32;letter-spacing:-.04em;word-break:keep-all}
 .qsub{font-size:13.5px;font-weight:500;color:#9a9789;margin-top:10px;word-break:keep-all}
 .opts{display:flex;flex-direction:column;gap:10px;margin-top:30px}
@@ -140,6 +139,8 @@ body{font-family:var(--sans);background:var(--bg);color:#fff;-webkit-font-smooth
 .row .m{flex:none;color:var(--ink-2);font-size:12px;width:54px;text-align:right}
 .row .r{flex:none;width:72px;text-align:right;font-variant-numeric:tabular-nums}
 .row.neg .r{color:var(--hot)}
+.row.note{margin-top:7px;font-weight:700}
+.row.note .r2{flex:none;text-align:right;color:var(--hot)}
 .hd{font-size:11px;color:var(--ink-3);letter-spacing:.1em;display:flex;justify-content:space-between;margin-bottom:4px}
 .ctype{text-align:center;padding:4px 0 2px}
 .ccode{font-size:11px;letter-spacing:.24em;color:var(--ink-2);margin-bottom:8px}
@@ -225,7 +226,7 @@ body{font-family:var(--sans);background:var(--bg);color:#fff;-webkit-font-smooth
     <img class="logo" src="data:image/png;base64,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" alt="VYNEHERB">
     <div class="kicker">VYNEHERB × 서울대 축제</div>
     <h1>너 지금<br><em>몇 점짜리</em><br>몸이야?</h1>
-    <div class="sub">14문항, 1분이면 영수증 나옴</div>
+    <div class="sub">16문항, 1분이면 영수증 나옴</div>
     <div class="chips"><span>체질 4종</span><span>건강 점수 100점</span><span>전국 백분위</span></div>
     <div class="perk">
       <b>참여만 해도 전원 증정</b>
@@ -276,11 +277,10 @@ body{font-family:var(--sans);background:var(--bg);color:#fff;-webkit-font-smooth
 
   <section class="screen" id="quiz">
     <div class="qtop">
-      <div class="qbar"><span id="qidx">01 / 14</span><b id="qpct">0%</b></div>
+      <div class="qbar"><span id="qidx">01 / 16</span><b id="qpct">0%</b></div>
       <div class="qtrack"><div class="qfill" id="qfill"></div></div>
     </div>
     <div class="qbody">
-      <div class="qtag" id="qtag">체질</div>
       <div class="qtext" id="qtext"></div>
       <div class="qsub" id="qsub"></div>
       <div class="opts" id="opts"></div>
@@ -340,11 +340,11 @@ const QR_IMG     = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAWgAAAFoCAIAAA
    part "A" = 체질 판정 · "B" = 점수 반영 · "F" = 순수 재미(결과 미반영)
    ============================================================ */
 const QUESTIONS = [
-  {part:"F", q:"전교 1등 해본 적 있어?", item:"전교 1등 이력", a:[
-    {t:"당연히 없지", u:"0회"},
-    {t:"딱 한 번 있음", u:"1회"},
-    {t:"몇 번 해봤음", u:"3회+"},
-    {t:"그게 내 정체성이었음", u:"상습범"}]},
+  {part:"F", key:"top1", q:"전교 1등 해본 적 있어?", item:"전교 1등 이력", a:[
+    {t:"당연히 없지", u:"0회", r:"대부분 여기야"},
+    {t:"딱 한 번 있음", u:"1회", r:"그 한 번을 평생 우려먹는 중"},
+    {t:"몇 번 해봤음", u:"3회+", r:"어쩐지"},
+    {t:"그게 내 정체성이었음", u:"상습범", r:"지금도 그런지는 아래에서 확인"}]},
 
   {part:"A", q:"내 체형 어디에 가까워?", sub:"옷 입었을 때 기준", a:[
     {t:"말랐고 살이 안 붙음", s:{SE:3}},
@@ -358,17 +358,23 @@ const QUESTIONS = [
     {t:"원래 땀이 잘 안 남", s:{TY:2,SE:1}},
     {t:"기운 쭉 빠짐", s:{SE:3}}]},
 
+  {part:"F", key:"battery", q:"지금 폰 배터리 몇 %야?", sub:"확인하고 와도 돼", item:"폰 배터리 잔량", a:[
+    {t:"20% 밑. 빨간불", u:"20%-", r:"이 테스트 끝까지 갈 수 있나"},
+    {t:"50% 언저리", u:"50%", r:"평범"},
+    {t:"80%쯤", u:"80%", r:"관리형"},
+    {t:"90% 넘음. 방금 뺐음", u:"100%", r:"준비된 사람"}]},
+
   {part:"A", q:"더위랑 추위 중에 뭐가 더 싫어?", a:[
     {t:"둘 다 그럭저럭 버팀", s:{TE:1,TY:1}},
     {t:"추위. 겨울이 지옥", s:{SE:3}},
     {t:"더위. 여름이 지옥", s:{SY:2,TE:1}},
     {t:"손발은 찬데 얼굴은 뜨거움", s:{SY:3}}]},
 
-  {part:"F", q:"알람 몇 개 맞춰놓고 자?", item:"알람 개수", a:[
-    {t:"안 맞춤. 그냥 일어남", u:"0개"},
-    {t:"1개면 충분", u:"1개"},
-    {t:"2~3개는 있어야지", u:"3개"},
-    {t:"5개 이상. 다 끔", u:"5개+"}]},
+  {part:"F", key:"alarm", q:"알람 몇 개 맞춰놓고 자?", item:"알람 개수", a:[
+    {t:"안 맞춤. 그냥 일어남", u:"0개", r:"몸에 시계 있는 타입"},
+    {t:"1개면 충분", u:"1개", r:"믿음직"},
+    {t:"2~3개는 있어야지", u:"3개", r:"평균"},
+    {t:"5개 이상. 다 끔", u:"5개+", r:"알람이 문제가 아닌 것 같은데"}]},
 
   {part:"A", q:"소화력 어때?", sub:"장은 거짓말 안 함", a:[
     {t:"잘 체하고 울렁거림", s:{TY:3}},
@@ -382,17 +388,23 @@ const QUESTIONS = [
     {t:"남 신경 안 쓰고 내 방식대로", s:{TY:3}},
     {t:"속으로 계속 곱씹음", s:{SE:3}}]},
 
+  {part:"F", key:"exam", q:"시험 기간의 나는?", item:"시험기간 유형", a:[
+    {t:"계획 세워서 미리 함", u:"계획러", r:"진짜? 진짜로?"},
+    {t:"전날 밤에 다 함", u:"벼락형", r:"성공률은 본인이 제일 잘 알겠지"},
+    {t:"친구 노트로 버팀", u:"의존형", r:"그 친구한테 잘해라"},
+    {t:"일찍 마음을 놓음", u:"포기형", r:"평온해 보여서 좋다"}]},
+
   {part:"A", q:"컨디션 안 좋으면 어디부터 와?", a:[
     {t:"무른 변. 기운 없음", s:{SE:3}},
     {t:"얼굴 열나고 입 마르고 잠 안 옴", s:{SY:3}},
     {t:"변비. 몸이 무거움", s:{TE:3}},
     {t:"다리에 힘이 빠짐", s:{TY:3}}]},
 
-  {part:"F", q:"안 읽은 카톡 몇 개야?", item:"안 읽은 카톡", a:[
-    {t:"0개. 다 읽어야 됨", u:"0개"},
-    {t:"10개 안쪽", u:"10-"},
-    {t:"100개는 넘음", u:"100+"},
-    {t:"세는 걸 포기함", u:"∞"}]},
+  {part:"F", key:"kakao", q:"안 읽은 카톡 몇 개야?", item:"안 읽은 카톡", a:[
+    {t:"0개. 다 읽어야 됨", u:"0개", r:"이거 못 참는 사람 있지"},
+    {t:"10개 안쪽", u:"10-", r:"건강한 편"},
+    {t:"100개는 넘음", u:"100+", r:"누군가는 답장 기다리는 중"},
+    {t:"세는 걸 포기함", u:"∞", r:"세는 순간 지는 거 맞음"}]},
 
   {part:"B", q:"지난주 야식 몇 번 먹었어?", sub:"솔직하게", item:"야식 (심야결제)", a:[
     {t:"0번. 참았음", v:500, u:"0회", r:"드문 케이스. 계속 그렇게 해"},
@@ -406,7 +418,7 @@ const QUESTIONS = [
     {t:"1~2잔", v:0, u:"2잔", r:"표준"},
     {t:"안 마심", v:300, u:"0잔", r:"카페인 없이 버티는 몸, 인정"}]},
 
-  {part:"B", q:"평균 몇 시간 자?", sub:"누운 시간 말고 진짜 잔 시간", item:"수면 부채", a:[
+  {part:"B", key:"sleep", q:"평균 몇 시간 자?", sub:"누운 시간 말고 진짜 잔 시간", item:"수면 부채", a:[
     {t:"7시간 이상", v:1500, u:"7h+", r:"이거 하나로 점수 확 오름"},
     {t:"6시간쯤", v:0, u:"6h", r:"딱 평균"},
     {t:"5시간쯤", v:-1200, u:"5h", r:"이자 붙는 중"},
@@ -590,7 +602,7 @@ function drawChar(c, key, cx, cy, size){
 /* ============================================================
    STATE
    ============================================================ */
-let cur = 0, ans = [];
+let cur = 0, ans = [], locked = false;
 let profile = {name:"", sex:"", h:null, w:null};
 let shareOpts = {name:true, bio:false};
 const $ = function(s){ return document.querySelector(s); };
@@ -620,13 +632,11 @@ function renderQ(){
   const pct = Math.round(cur/N*100);
   $("#qpct").textContent = pct + "%";
   $("#qfill").style.width = pct + "%";
-  const tag = $("#qtag");
-  tag.textContent = q.part === "F" ? "그냥 궁금해서" : (q.part === "A" ? "체질" : "지난 일주일");
-  tag.classList.toggle("fun", q.part === "F");
   $("#qtext").textContent = q.q;
   $("#qsub").textContent = q.sub || "";
   $("#qsub").style.display = q.sub ? "" : "none";
 
+  locked = false;
   const box = $("#opts");
   box.innerHTML = "";                              // 매 문항 새 버튼 = 이전 선택 상태가 남지 않음
   q.a.forEach(function(o,i){
@@ -637,15 +647,15 @@ function renderQ(){
     const tx = document.createElement("span"); tx.textContent = o.t;
     b.appendChild(n); b.appendChild(tx);
     b.onclick = function(){
-      if(b.dataset.done) return;
-      b.dataset.done = "1";
+      if(locked) return;
+      locked = true;
       b.classList.add("tapped");
       b.blur();                                    // 포커스 잔상 제거
       ans[cur] = i;
       if(o.r){ toast(o.r); }
       setTimeout(function(){
         cur++;
-        if(cur < N){ renderQ(); } else { finish(); }
+        if(cur < N){ renderQ(); } else { locked = false; finish(); }
       }, 150);
     };
     box.appendChild(b);
@@ -668,8 +678,32 @@ function score(){
   const total = items.reduce(function(a,b){ return a + b.val; }, 0);
   const gr = GRADES.find(function(g){ return total >= g.min; });
   const hs = healthScore(total);
-  return {type:TYPES[key], key:key, items:items, fun:fun, total:total,
-          grade:gr.g, gmsg:gr.m, hscore:hs, top:topPercent(hs), rank:rankLabel(topPercent(hs))};
+  const out = {type:TYPES[key], key:key, items:items, fun:fun, total:total,
+               grade:gr.g, gmsg:gr.m, hscore:hs, top:topPercent(hs), rank:rankLabel(topPercent(hs))};
+  out.note = noteOf(out);
+  return out;
+}
+
+/* 재미 문항 조합으로 뽑는 한 줄. 점수와 무관한 순수 농담 레이어 */
+function noteOf(r){
+  const A = {};
+  QUESTIONS.forEach(function(q,i){ if(q.key){ A[q.key] = ans[i]; } });
+  const rules = [
+    [A.battery === 0 && A.kakao >= 2,          "연락 두절 임박"],
+    [A.alarm === 3 && A.sleep === 3,           "알람이 문제가 아님"],
+    [A.top1 === 3 && (r.grade === "D" || r.grade === "C+"), "그때 그 사람 맞습니까"],
+    [A.exam === 3 && A.top1 >= 2,              "전성기가 지나갔음"],
+    [A.exam === 0 && A.alarm === 0 && A.sleep === 0, "이 영수증만 위조 의심"],
+    [A.kakao === 0 && A.alarm <= 1,            "통제 성향 있음"],
+    [A.battery === 3 && A.sleep === 0,         "준비된 인간"],
+    [A.exam === 1 && A.sleep >= 2,             "벼락치기 숙련자"],
+    [A.kakao === 3,                            "사회생활 점검 요망"],
+    [A.top1 === 0 && r.hscore >= 70,           "공부 대신 몸을 챙긴 케이스"],
+    [A.exam === 2,                             "그 친구한테 커피 한 잔"],
+    [A.battery === 0,                          "충전기부터 찾을 것"]
+  ];
+  for(let i = 0; i < rules.length; i++){ if(rules[i][0]){ return rules[i][1]; } }
+  return "특이사항 없음";
 }
 
 function healthScore(total){
@@ -794,6 +828,7 @@ function receiptHTML(r){
   + '<div class="dv"></div>'
   + '<div class="hd"><span>서비스 (무료)</span><span>SERVICE</span></div>'
   + funRows
+  + '<div class="row note"><span class="l">특이사항</span><span class="r2">' + r.note + '</span></div>'
   + '<div class="dv"></div>'
   + '<div class="total"><span>합 계</span><span class="r" style="' + (r.total < 0 ? "color:var(--hot)" : "") + '">' + nf(r.total) + '</span></div>'
   + '<div class="grade"><span class="lab">건강 학점</span><span class="g">' + r.grade + '</span></div>'
@@ -961,30 +996,30 @@ async function buildCard(r){
     });
   };
   const dash = function(m){
-    m = m === undefined ? 16 : m;
+    m = m === undefined ? 11 : m;
     push(m*2 + 2, function(y){
       c.strokeStyle = "#b9b2a2"; c.lineWidth = 2; c.setLineDash([9,9]);
       c.beginPath(); c.moveTo(L, y+m); c.lineTo(R, y+m); c.stroke(); c.setLineDash([]);
     });
   };
   const solid = function(m){
-    m = m === undefined ? 14 : m;
+    m = m === undefined ? 10 : m;
     push(m*2 + 8, function(y){ c.fillStyle = INK; c.fillRect(L,y+m,R-L,3); c.fillRect(L,y+m+7,R-L,3); });
   };
   const row = function(l,mid,rt,neg){
-    push(56, function(y){
+    push(47, function(y){
       c.textBaseline = "middle";
-      const yy = y + 28;
+      const yy = y + 24;
       c.font = F(400,34); c.fillStyle = INK;  c.textAlign = "left";  c.fillText(l, L, yy);
       c.font = F(400,26); c.fillStyle = INK2; c.textAlign = "right"; c.fillText(mid, R-190, yy);
       c.font = F(400,34); c.fillStyle = neg ? HOT : INK; c.textAlign = "right"; c.fillText(rt, R, yy);
     });
   };
   const hdr = function(l,rt){
-    push(42, function(y){
+    push(36, function(y){
       c.font = F(400,22); c.fillStyle = INK3; c.textBaseline = "middle";
-      c.textAlign = "left";  c.fillText(l, L, y+21);
-      c.textAlign = "right"; c.fillText(rt, R, y+21);
+      c.textAlign = "left";  c.fillText(l, L, y+18);
+      c.textAlign = "right"; c.fillText(rt, R, y+18);
     });
   };
   const kv = function(k,v){
@@ -1004,83 +1039,90 @@ async function buildCard(r){
   };
 
   /* ---- 구성 ---- */
-  const lw = 300, lgh = Math.round(lw * IMGS.logo.height / IMGS.logo.width);
-  push(lgh + 26, function(y){ c.drawImage(IMGS.logo, CX-lw/2, y, lw, lgh); });
-  text("건강영수증", {size:48, weight:700, align:"center", ls:20, lh:1.4, mb:4});
-  text("HEALTH RECEIPT", {size:21, color:INK2, align:"center", ls:10, lh:1.4});
+  const lw = 260, lgh = Math.round(lw * IMGS.logo.height / IMGS.logo.width);
+  push(lgh + 18, function(y){ c.drawImage(IMGS.logo, CX-lw/2, y, lw, lgh); });
+  text("건강영수증", {size:44, weight:700, align:"center", ls:18, lh:1.35, mb:2});
+  text("HEALTH RECEIPT", {size:19, color:INK2, align:"center", ls:9, lh:1.35});
   dash();
   text(stamp() + "  ·  " + CFG.venue + "  ·  NO." + serial(), {size:24, color:INK2, align:"center", lh:1.45});
-  text("성명  " + (shareOpts.name ? profile.name : "익명") + " 님", {size:28, color:INK, align:"center", lh:1.45});
   (function(){
-    const bits = [profile.sex];
+    const bits = ["성명  " + (shareOpts.name ? profile.name : "익명") + " 님", profile.sex];
     if(shareOpts.bio){
       const v = bmiOf(profile);
       if(profile.h){ bits.push(profile.h + "cm"); }
       if(profile.w){ bits.push(profile.w + "kg"); }
       if(v !== null){ bits.push("BMI " + v.toFixed(1) + " " + bmiLabel(v)); }
     }
-    text(bits.join("  ·  "), {size:23, color:INK2, align:"center", lh:1.45});
+    text(bits.join("  ·  "), {size:26, color:INK, align:"center", lh:1.45});
   })();
   solid();
-  push(296, function(y){ drawChar(c, r.key, CX, y+146, 286); });
+  push(216, function(y){ drawChar(c, r.key, CX, y+106, 208); });
   text(t.code + "   " + t.heat, {size:27, color:INK2, align:"center", ls:5, lh:1.4, mb:4});
-  text(t.name, {size:92, weight:700, align:"center", lh:1.26, mb:2});
-  text(t.nick, {size:42, weight:700, color:HOT, align:"center", lh:1.4, mb:2});
-  wrap(t.line, {size:28, color:INK2, align:"center", lh:1.55});
+  text(t.name, {size:78, weight:700, align:"center", lh:1.22, mb:2});
+  text(t.nick, {size:36, weight:700, color:HOT, align:"center", lh:1.35, mb:2});
+  wrap(t.line, {size:26, color:INK2, align:"center", lh:1.5});
   solid();
   hdr("품목", "수량        건강가");
   r.items.forEach(function(i){ row(i.label, i.unit, nf(i.val), i.val < 0); });
-  dash(10);
+  dash(7);
   hdr("서비스 (무료)", "SERVICE");
   r.fun.forEach(function(i){ row(i.label, i.unit, "₩0", false); });
-  dash(10);
-  push(76, function(y){
-    c.textBaseline = "middle"; const yy = y + 38;
-    c.font = F(700,40); c.fillStyle = INK; c.textAlign = "left"; c.fillText("합 계", L, yy);
-    c.font = F(700,52); c.fillStyle = r.total < 0 ? HOT : INK; c.textAlign = "right"; c.fillText(nf(r.total), R, yy);
-  });
-  push(122, function(y){
-    c.textBaseline = "middle";
-    c.font = F(400,28);  c.fillStyle = INK2; c.textAlign = "left";  c.fillText("건강 학점", L, y+61);
-    c.font = F(700,126); c.fillStyle = INK;  c.textAlign = "right"; c.fillText(r.grade, R, y+61);
-  });
-  wrap(r.gmsg, {size:28, color:INK2, align:"center", lh:1.5, mt:2});
-  solid();
   push(52, function(y){
-    c.textBaseline = "middle"; const yy = y+26;
+    c.textBaseline = "middle"; const yy = y + 26;
+    c.font = F(700,32); c.fillStyle = INK; c.textAlign = "left";  c.fillText("특이사항", L, yy);
+    c.font = F(700,32); c.fillStyle = HOT; c.textAlign = "right"; c.fillText(r.note, R, yy);
+  });
+  dash(7);
+  push(64, function(y){
+    c.textBaseline = "middle"; const yy = y + 32;
+    c.font = F(700,38); c.fillStyle = INK; c.textAlign = "left"; c.fillText("합 계", L, yy);
+    c.font = F(700,48); c.fillStyle = r.total < 0 ? HOT : INK; c.textAlign = "right"; c.fillText(nf(r.total), R, yy);
+  });
+  push(102, function(y){
+    c.textBaseline = "middle";
+    c.font = F(400,27);  c.fillStyle = INK2; c.textAlign = "left";  c.fillText("건강 학점", L, y+51);
+    c.font = F(700,108); c.fillStyle = INK;  c.textAlign = "right"; c.fillText(r.grade, R, y+51);
+  });
+  wrap(r.gmsg, {size:26, color:INK2, align:"center", lh:1.45, mt:2});
+  solid();
+  push(45, function(y){
+    c.textBaseline = "middle"; const yy = y+22;
     c.font = F(400,28); c.fillStyle = INK2; c.textAlign = "left"; c.fillText("건강 점수", L, yy);
     c.textAlign = "right";
     c.font = F(400,26); c.fillStyle = INK2; c.fillText(" / 100", R, yy);
     const tw = c.measureText(" / 100").width;
     c.font = F(700,44); c.fillStyle = INK; c.fillText(String(r.hscore), R - tw, yy);
   });
-  push(52, function(y){
-    c.textBaseline = "middle"; const yy = y+26;
+  push(45, function(y){
+    c.textBaseline = "middle"; const yy = y+22;
     c.font = F(400,28); c.fillStyle = INK2; c.textAlign = "left";  c.fillText("전국 백분위", L, yy);
     c.font = F(700,40); c.fillStyle = HOT;  c.textAlign = "right"; c.fillText(r.rank, R, yy);
   });
-  push(96, function(y){
-    const gw = R - L, gh = 18, gy = y + 18;
+  push(84, function(y){
+    const gw = R - L, gh = 16, gy = y + 14;
     c.fillStyle = "#ded7c7"; c.fillRect(L, gy, gw, gh);
     c.fillStyle = INK; c.fillRect(L, gy, gw*r.hscore/100, gh);
     c.strokeStyle = INK; c.lineWidth = 2; c.strokeRect(L, gy, gw, gh);
     c.fillStyle = HOT; c.fillRect(L + gw*NAT_MEAN/100 - 1.5, gy-7, 3, gh+14);
     c.font = F(400,20); c.textBaseline = "middle";
-    c.fillStyle = INK3; c.textAlign = "left";  c.fillText("0", L, gy+gh+32);
-    c.textAlign = "right"; c.fillText("100", R, gy+gh+32);
-    c.fillStyle = HOT; c.textAlign = "center"; c.fillText("전국 평균 " + NAT_MEAN, L + gw*NAT_MEAN/100, gy+gh+32);
+    c.fillStyle = INK3; c.textAlign = "left";  c.fillText("0", L, gy+gh+28);
+    c.textAlign = "right"; c.fillText("100", R, gy+gh+28);
+    c.fillStyle = HOT; c.textAlign = "center"; c.fillText("전국 평균 " + NAT_MEAN, L + gw*NAT_MEAN/100, gy+gh+28);
   });
   solid();
-  kv("찰떡궁합", t.mate + " · 태그해");
-  kv("희 귀 도", t.rate);
-  push(18, function(){});
-  push(168, function(y){
-    c.drawImage(IMGS.qr, CX-58, y, 116, 116);
-    c.font = F(700,36); c.fillStyle = INK; c.textAlign = "center"; c.textBaseline = "middle";
-    c.fillText(CFG.ig, CX, y+146);
+  push(50, function(y){
+    c.textBaseline = "middle"; const yy = y + 25;
+    c.font = F(400,26); c.fillStyle = INK3; c.textAlign = "left";  c.fillText("찰떡궁합", L, yy);
+    c.font = F(700,26); c.fillStyle = INK;  c.textAlign = "right"; c.fillText(t.mate + " · 태그해   |   " + t.rate, R, yy);
   });
-  text(CFG.tags + " #" + t.name, {size:25, color:INK2, align:"center", lh:1.4, mt:4});
-  text("※ 재미로 보는 테스트이며 의학적 진단이 아닙니다.", {size:20, color:INK3, align:"center", lh:1.4, mt:8});
+  push(12, function(){});
+  push(146, function(y){
+    c.drawImage(IMGS.qr, CX-50, y, 100, 100);
+    c.font = F(700,33); c.fillStyle = INK; c.textAlign = "center"; c.textBaseline = "middle";
+    c.fillText(CFG.ig, CX, y+126);
+  });
+  text(CFG.tags + " #" + t.name, {size:23, color:INK2, align:"center", lh:1.35, mt:2});
+  text("※ 재미로 보는 테스트이며 의학적 진단이 아닙니다.", {size:18, color:INK3, align:"center", lh:1.35, mt:6});
 
   /* ---- 그리기 ---- */
   const totalH = ops.reduce(function(a,o){ return a + o.h; }, 0);
@@ -1089,6 +1131,7 @@ async function buildCard(r){
   const TH = -2.2 * Math.PI/180;                  // 살짝 기울여서 붙여놓은 느낌
   const cs = Math.cos(TH), sn = Math.abs(Math.sin(TH));
   const k = Math.min(1, (H-150)/(bodyH*cs + PW*sn), (W-80)/(PW*cs + bodyH*sn));
+  window.__cardK = k; window.__cardH = bodyH;
 
   c.setTransform(1,0,0,1,0,0);
   paintBackdrop(c, W, H, CHAR_COLOR[r.key].body);
@@ -1151,12 +1194,12 @@ $("#toQuiz").onclick = function(){
   profile.h = $("#fH").value ? h : null;
   profile.w = $("#fW").value ? w : null;
   $("#fErr").textContent = "";
-  cur = 0; ans = [];
+  cur = 0; ans = []; locked = false;
   show("quiz"); renderQ();
 };
 
 $("#back").onclick  = function(){ if(cur > 0){ cur--; renderQ(); } else { show("intake"); } };
-$("#again").onclick = function(){ location.hash = ""; cur = 0; ans = []; show("intake"); };
+$("#again").onclick = function(){ location.hash = ""; cur = 0; ans = []; locked = false; show("intake"); };
 $("#optName").onchange = function(){ shareOpts.name = this.checked; syncShare(); };
 $("#optBio").onchange  = function(){ shareOpts.bio  = this.checked; syncShare(); };
 
@@ -1213,7 +1256,7 @@ $("#share").onclick = async function(e){
 
 /* 공유 링크로 들어온 경우 결과 바로 표시 */
 (function boot(){
-  const m = location.hash.match(/r=([0-3]{14})/);
+  const m = location.hash.match(/r=([0-3]{16})/);
   if(!m) return;
   const pm = location.hash.match(/[#&]p=([^&]*)/);
   if(pm){
