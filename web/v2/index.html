@@ -636,12 +636,6 @@ function bmiOf(p){
   const m = p.h/100;
   return Math.round((p.w/(m*m))*10)/10;
 }
-function bmiLabel(v){
-  if(v < 18.5) return "저체중";
-  if(v < 23)   return "정상";
-  if(v < 25)   return "과체중";
-  return "비만";
-}
 function show(id){
   document.querySelectorAll(".screen").forEach(function(s){ s.classList.remove("on"); });
   $("#"+id).classList.add("on");
@@ -798,7 +792,7 @@ function bioHTML(){
   let rows = "";
   if(profile.h){ rows += '<div><span class="k">키</span><span>' + profile.h + ' cm</span></div>'; }
   if(profile.w){ rows += '<div><span class="k">체중</span><span>' + profile.w + ' kg</span></div>'; }
-  if(v !== null){ rows += '<div><span class="k">체격 지수</span><span>' + v.toFixed(1) + ' <span class="tag">' + bmiLabel(v) + '</span></span></div>'; }
+  if(v !== null){ rows += '<div><span class="k">체격 지수</span><span>BMI ' + v.toFixed(1) + '</span></div>'; }
   const hidden = !shareOpts.bio;
   return '<div class="dv"></div>'
     + '<div class="shd"><span>신체 계측</span>' + (hidden ? '<span class="r pv">공유하면 가려짐 · 나만 보임</span>' : '<span class="r">BIOMETRICS</span>') + '</div>'
@@ -1054,7 +1048,7 @@ async function buildCard(r){
       const v = bmiOf(profile);
       if(profile.h){ who.push(profile.h + "cm"); }
       if(profile.w){ who.push(profile.w + "kg"); }
-      if(v !== null){ who.push("BMI " + v.toFixed(1) + " " + bmiLabel(v)); }
+      if(v !== null){ who.push("BMI " + v.toFixed(1)); }
     }
     text(who.join("  ·  "), {size:25, color:INK, lh:1.45});
   })();
