@@ -220,18 +220,14 @@ body{font-family:var(--sans);background:var(--paper);color:var(--ink);-webkit-fo
 </style>
 <style>
 /* ============ 검역 심사 무드 — 다크 네이비 · 픽셀 (기존 규칙 오버라이드) ============ */
-@font-face{
-  font-family:"DungGeunMo";
-  src:url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2004@1.0/DungGeunMo.woff") format("woff");
-  font-weight:normal;font-display:swap;
-}
+@import url("https://cdn.jsdelivr.net/npm/galmuri@latest/dist/galmuri.css");
 :root{
   --bg:#1a1d27; --bg2:#232838; --bg3:#2b3145;
   --lined:#353b50; --lined2:#4a5270;
   --lime:#c9f24b; --lime2:#e8ffa1;
   --tx:#f1f3f8; --tx2:#aab1c6; --tx3:#767e98;
   --hotd:#ff8a6b;
-  --pixel:"DungGeunMo","Nanum Gothic Coding",ui-monospace,monospace;
+  --pixel:"Galmuri11","DungGeunMo","Nanum Gothic Coding",ui-monospace,monospace;
 }
 body{background:var(--bg);color:var(--tx)}
 .btn{font-family:var(--pixel);font-weight:400;letter-spacing:.01em;background:var(--lime);color:#161a10;border-radius:10px}
