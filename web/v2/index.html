@@ -326,8 +326,9 @@ body{background:var(--bg);color:var(--tx)}
 .slotCard{position:relative;width:58%;background:#fffdf6;margin-top:-2px;padding:16px 10px 22px;
   box-shadow:0 10px 26px rgba(0,0,0,.5);display:flex;flex-wrap:wrap;justify-content:center;gap:14px}
 .slotCard canvas{width:30px;height:30px;image-rendering:pixelated}
+.slotLogo{flex:none;width:96px;margin-top:12px}
 .slotTxt{flex:none;width:100%;text-align:center;font-family:var(--pixel);font-size:13px;
-  color:#1d3f30;letter-spacing:.06em;margin-top:11px}
+  color:#1d3f30;letter-spacing:.08em;margin-top:7px}
 .slotCard::after{content:"";flex:none;width:78%;height:30px;margin-top:10px;
   background:repeating-linear-gradient(180deg,#d9d3bd 0 2px,transparent 2px 11px)}
 .slotCard::before{content:"";position:absolute;left:0;right:0;bottom:-7px;height:7px;
@@ -1321,9 +1322,12 @@ const ROUTES = [
     drawIcon(ic.getContext("2d"), x[1], 18, 18, 32, "#1d3f30");
     slot.appendChild(ic);
   });
+  const lg = document.createElement("img");
+  lg.className = "slotLogo"; lg.src = LOGO_INK; lg.alt = "VYNEHERB";
+  slot.appendChild(lg);
   const st = document.createElement("div");
   st.className = "slotTxt";
-  st.textContent = "VYNEHERB 건강영수증";
+  st.textContent = "체질탑승권";
   slot.appendChild(st);
   const d = new Date();
   const cnt = 940 + d.getHours()*47 + Math.floor(d.getMinutes()*0.8);
