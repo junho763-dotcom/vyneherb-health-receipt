@@ -77,6 +77,8 @@ body{font-family:var(--pixel);background:var(--bg);color:var(--tx);-webkit-font-
 .qtop{width:100%;background:var(--band);padding:9px 14px}
 .qbar{display:flex;justify-content:space-between;align-items:center;font-size:7px;color:var(--tx)}
 .qbar b{font-size:12px;color:var(--lime);font-weight:400}
+.qgauge{width:100%;height:4px;background:#232231}
+.qgauge i{display:block;height:100%;width:0;background:var(--lime);transition:width .35s cubic-bezier(.4,0,.2,1)}
 
 /* ---------- 인트로 ---------- */
 #intro{align-items:center;justify-content:flex-start;padding:0 0 40px;text-align:center}
@@ -184,8 +186,8 @@ body{font-family:var(--pixel);background:var(--bg);color:var(--tx);-webkit-font-
 .rlogo{display:block;width:68px;margin:0 auto 8px}
 .rtitle{text-align:center;font-size:11px;color:var(--ink70);margin-bottom:2px}
 .rq{text-align:center;font-size:18px;color:var(--ink);margin-bottom:10px}
-.dv{border-top:.5px dashed var(--ink70);margin:9px 0}
-.dv2{border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);height:3px;margin:10px 0}
+.dv{border-top:.3px dashed var(--ink70);margin:9px 0}
+.dv2{border-top:.3px solid var(--ink70);margin:10px 0}
 .meta{font-size:9px;color:var(--ink70);line-height:1.85;text-align:center}
 .meta2{font-size:7.5px;color:var(--ink50);line-height:1.9;text-align:center}
 .pv{color:var(--minus)}
@@ -217,18 +219,14 @@ body{font-family:var(--pixel);background:var(--bg);color:var(--tx);-webkit-font-
 .drow .db i{position:absolute;left:0;top:0;bottom:0;background:#b9bdc9;display:block}
 .drow .dp{flex:none;width:26px;text-align:right;color:var(--ink50);font-variant-numeric:tabular-nums}
 .drow .dme{flex:none;width:24px;font-size:8px;color:var(--minus);white-space:nowrap}
-.drow.on{color:var(--minus)}
-.drow.on .db i{background:var(--minus)}
-.drow.on .dp{color:var(--minus)}
+.drow.on .dn,.drow.on .dp,.drow.on .dme{color:inherit}
 .bio>div{display:flex;justify-content:space-between;gap:8px;font-size:9px;line-height:1.95;color:var(--ink)}
 .bio .k{color:var(--ink)}
 .rfoot{text-align:center;margin-top:12px}
 .rfoot img.qr{width:80px;image-rendering:pixelated;margin-bottom:6px}
 .rfoot .ig{font-size:9px;color:var(--ink)}
 .rfoot .tags{font-size:8px;color:var(--ink50);margin-top:4px;line-height:1.7}
-.rfoot .dis{font-size:7.5px;color:var(--ink30);margin-top:10px;line-height:1.7}
-.barcode{display:flex;gap:1.5px;justify-content:center;align-items:flex-end;height:24px;margin-top:12px}
-.barcode i{background:var(--ink);width:2px;display:block}
+.rfoot .dis{font-size:6.2px;color:var(--ink30);margin-top:10px;line-height:1.7;white-space:nowrap}
 
 /* ---------- 공유 설정 · 액션 ---------- */
 .shopt{background:var(--bg);padding:14px 13px;margin-top:22px}
@@ -319,6 +317,7 @@ body{font-family:var(--pixel);background:var(--bg);color:var(--tx);-webkit-font-
 
   <section class="screen" id="quiz">
     <div class="qtop"><div class="qbar"><span>탑승 수속</span><b id="qpct">0%</b></div></div>
+    <div class="qgauge"><i id="qfill"></i></div>
     <div class="qbody">
       <div class="qnum" id="qnum">Q1.</div>
       <div class="qtext" id="qtext"></div>
@@ -699,7 +698,9 @@ function stamp(){
 function renderQ(){
   locked = false;
   const q = QUESTIONS[cur];
-  $("#qpct").textContent = Math.round(cur/N*100) + "%";
+  const pct = Math.round(cur/N*100);
+  $("#qpct").textContent = pct + "%";
+  $("#qfill").style.width = pct + "%";
   $("#qnum").textContent = "Q" + (cur+1) + ".";
   $("#qtext").textContent = q.q;
   $("#qsub").textContent = q.sub || "";
@@ -779,6 +780,7 @@ function score(){
 function startAnalyzing(){
   const r = score();
   window.__R = r;
+  $("#qfill").style.width = "100%";
   show("analyzing");
 
   const shipEl = $("#anShip");
@@ -827,8 +829,6 @@ function bioHTML(){
 
 function receiptHTML(r){
   const t = r.type;
-  let bars = "";
-  for(let i = 0; i < 40; i++){ bars += '<i style="height:' + (10 + ((i*37) % 22)) + 'px"></i>'; }
   const goodRows = t.good.map(function(g){
     return '<div class="frow2"><span class="l">' + g[0] + ' <em>— ' + g[1] + '</em></span><span class="r plus">+ 적립</span></div>';
   }).join("");
@@ -841,16 +841,19 @@ function receiptHTML(r){
   const svcRows = r.fun.map(function(i){
     return '<div class="frow2"><span class="l">' + i.label + '</span><span class="r">' + i.unit + ' · ' + nfW(0) + '</span></div>';
   }).join("");
-  const distRows = DIST.map(function(d){
-    const me = d.k === r.key;
-    return '<div class="drow ' + (me ? "on" : "") + '">'
-      + '<span class="dn">' + d.n + '</span>'
-      + '<span class="db"><i style="width:' + d.w + '%"></i></span>'
-      + '<span class="dp">' + d.p + '%</span>'
-      + '<span class="dme">' + (me ? "← 나" : "") + '</span></div>';
-  }).join("");
   const UI = {TY:{n:"#D78D2F",i:"#C79A2E"},SY:{n:"#C05351",i:"#D96E80"},
               TE:{n:"#488E7C",i:"#4FA895"},SE:{n:"#5D75D0",i:"#3D86BC"}}[r.key];
+  // 내 위치 행만 체질 고유 색으로. 나머지 행은 기존 색 유지.
+  const distRows = DIST.map(function(d){
+    const me = d.k === r.key;
+    const c = me ? ' style="color:' + UI.n + '"' : '';
+    const bc = me ? ' style="width:' + d.w + '%;background:' + UI.n + '"' : ' style="width:' + d.w + '%"';
+    return '<div class="drow ' + (me ? "on" : "") + '"' + c + '>'
+      + '<span class="dn">' + d.n + '</span>'
+      + '<span class="db"><i' + bc + '></i></span>'
+      + '<span class="dp"' + c + '>' + d.p + '%</span>'
+      + '<span class="dme"' + c + '>' + (me ? "← 나" : "") + '</span></div>';
+  }).join("");
   return ''
   + '<img class="rlogo" src="assets/sub4_logo.png" alt="VYNEHERB">'
   + '<div class="rtitle">체질 결과표</div>'
@@ -894,7 +897,6 @@ function receiptHTML(r){
   +   '<div class="ig">' + CFG.ig + '</div>'
   +   '<div class="tags">' + CFG.tags + ' #' + t.name + '</div>'
   +   '<div class="dis">※ 재미로 보는 생활 습관 테스트이며 의학적 진단이 아닙니다.</div>'
-  +   '<div class="barcode">' + bars + '</div>'
   + '</div>';
 }
 
@@ -1030,7 +1032,7 @@ async function buildCard(r){
   };
   const solid = function(m){
     m = m === undefined ? 8 : m;
-    push(m*2 + 8, function(y){ c.fillStyle = INK; c.fillRect(L,y+m,R-L,3); c.fillRect(L,y+m+7,R-L,3); });
+    push(m*2 + 2, function(y){ c.fillStyle = "rgba(42,41,55,.7)"; c.fillRect(L, y+m, R-L, 1); });
   };
   const hdr = function(l,rt){
     push(33, function(y){
@@ -1132,11 +1134,11 @@ async function buildCard(r){
     push(38, function(y){
       const yy = y + 19, bx = L + 140, bw = R - bx - 96;
       c.textBaseline = "middle";
-      c.font = F(me ? 700 : 400, 24); c.fillStyle = me ? RED : INK; c.textAlign = "left"; c.fillText(d.n, L, yy);
+      c.font = F(me ? 700 : 400, 24); c.fillStyle = me ? UI.n : INK; c.textAlign = "left"; c.fillText(d.n, L, yy);
       c.fillStyle = "#EAEAEA"; c.fillRect(bx, yy-9, bw, 18);
       c.strokeStyle = "rgba(42,41,55,.15)"; c.lineWidth = 1.5; c.strokeRect(bx, yy-9, bw, 18);
-      c.fillStyle = me ? RED : "#b9bdc9"; c.fillRect(bx, yy-9, bw*d.w/100, 18);
-      c.font = F(me ? 700 : 400, 22); c.fillStyle = me ? RED : INK2; c.textAlign = "right";
+      c.fillStyle = me ? UI.n : "#b9bdc9"; c.fillRect(bx, yy-9, bw*d.w/100, 18);
+      c.font = F(me ? 700 : 400, 22); c.fillStyle = me ? UI.n : INK2; c.textAlign = "right";
       c.fillText(d.p + "%" + (me ? " ←나" : ""), R, yy);
     });
   });
