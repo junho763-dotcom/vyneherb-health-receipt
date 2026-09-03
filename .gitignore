@@ -4,3 +4,6 @@
 # 작업 부산물
 _chk.mjs
 *.b64.txt
+
+# 디자인 원본 (전달본 보관용, 배포본은 web/v2/assets)
+_design/
